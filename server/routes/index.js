@@ -2,15 +2,9 @@ const express = require('express')
 const cheerio = require('cheerio')
 const axios = require('axios')
 const schedule = require('node-schedule')
+const ProductList = require('../models/product')
 
 const router = express.Router()
-
-const info = {
-  title: [],
-  sale: [],
-  cash: [],
-  img: [],
-}
 
 const getDocument = async () => {
   try {
@@ -28,6 +22,7 @@ const crawling = () => {
 
     const $li_box = $('.li_box').toArray()
     $li_box.forEach(element => {
+      let productList = new ProductList()
       const el = cheerio.load(element)
       const title = el('.list_info').text().trim()
       const src = el('.lazy').attr('data-original')
@@ -35,26 +30,33 @@ const crawling = () => {
       const price = el('.price').find('del').text()
       const salePrice = el('.price').text().split(price)[1].trim()
       const sale = el('.icon_new').text()
-      info.img.push(img)
-      info.sale.push(sale)
-      info.title.push(title)
-      info.cash.push({price: price, salePrice: salePrice})
-    })
 
-    return info
+      productList.Image = img
+      productList.Sale = sale
+      productList.Title = title
+      productList.Price = price
+      productList.SalePrice = salePrice
+      productList.save(err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+      })
+    })
   })
 }
 
-schedule.scheduleJob('0 11 * * * *', () => {
-  crawling().then(info => {
-    console.log(info)
+schedule.scheduleJob('0 0 * * * *', () => {
+  crawling().then(() => {
+    console.log('crawling')
   })
 })
 
 router.get('/', (req, res) => {
-  crawling().then(info => {
-    res.send(info)
-  })
+  ProductList.find({})
+    .limit(90)
+    .then(productList => res.send(productList))
+    .catch(e => res.send(e))
 })
 
 module.exports = router

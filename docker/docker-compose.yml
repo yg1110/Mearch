@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  mongo:
+    image: mearch-mongo:1.0.0
+    build:
+      context: .
+      dockerfile: ./dockerfile-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb:/data/db
+    container_name: mearchDB
+    restart: always
