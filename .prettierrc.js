@@ -1,12 +1,12 @@
 module.exports = {
   arrowParens: 'avoid', // 화살표 함수 괄호 사용 방식
-  bracketSpacing: false, // 객체 리터럴에서 괄호에 공백 삽입 여부
+  bracketSpacing: true, // 객체 리터럴에서 괄호에 공백 삽입 여부
   endOfLine: 'auto', // EoF 방식, OS별로 처리 방식이 다름
   htmlWhitespaceSensitivity: 'css', // HTML 공백 감도 설정
   jsxBracketSameLine: false, // JSX의 마지막 `>`를 다음 줄로 내릴지 여부
   jsxSingleQuote: true, // JSX에 singe 쿼테이션 사용 여부
-  printWidth: 80, //  줄 바꿈 할 폭 길이
-  proseWrap: 'preserve', // markdown 텍스트의 줄바꿈 방식 (v1.8.2)
+  printWidth: 40, //  줄 바꿈 할 폭 길이
+  proseWrap: '', // markdown 텍스트의 줄바꿈 방식 (v1.8.2)
   quoteProps: 'as-needed', // 객체 속성에 쿼테이션 적용 방식
   semi: false, // 세미콜론 사용 여부
   singleQuote: true, // single 쿼테이션 사용 여부

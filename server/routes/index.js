@@ -54,6 +54,7 @@ schedule.scheduleJob('0 0 * * * *', () => {
 
 router.get('/', (req, res) => {
   ProductList.find({})
+    .sort({_id: -1, _id: 1})
     .limit(90)
     .then(productList => res.send(productList))
     .catch(e => res.send(e))

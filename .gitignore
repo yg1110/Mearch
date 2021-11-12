@@ -105,3 +105,4 @@ dist
 docker/mongodb
 docker/mongoinit
 .env
+.DS_Store
