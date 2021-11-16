@@ -1,6 +1,9 @@
 import React, { useState, FC } from 'react'
+
+import { Provider } from 'react-redux'
 import styled, { ThemeProvider, css } from 'styled-components'
 import { BrowserRouter } from 'react-router-dom'
+import { store } from '../Store'
 import { darkTheme, lightTheme } from '../Styles/theme'
 import GlobalStyle from '../Styles/GlobalStyle'
 
@@ -8,8 +11,8 @@ const ThemeMode = styled.div`
   ${({ theme }) => css`
     background-color: ${theme.colors.primary};
     color: ${theme.colors.secondary};
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
   `}
 `
 
@@ -42,7 +45,9 @@ const Providers: FC = ({ children }) => {
             <ThemeSwitchBtn onClick={switchTheme}>
               {currentThemeText}
             </ThemeSwitchBtn>
-            {children}
+            <Provider store={store}>
+              {children}
+            </Provider>
           </ThemeMode>
         </React.Suspense>
       </ThemeProvider>

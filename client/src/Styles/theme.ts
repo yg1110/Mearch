@@ -50,7 +50,6 @@ const device = {
   desktopL: `@media only screen and (max-width: ${size.desktop})`,
 }
 
-// 테마에 따라 다른 값을 갖는 색상 값입니다
 const lightThemeColors = {
   ...colors,
   primary: '#fff',
@@ -60,8 +59,8 @@ const lightThemeColors = {
 
 const darkThemeColors = {
   ...colors,
-  primary: '#333',
-  secondary: '#fff',
+  primary: '#252734',
+  secondary: '#ababae',
   tertiary: '#808080',
 }
 
