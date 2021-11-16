@@ -34,8 +34,8 @@ const crawling = () => {
       productList.Image = img
       productList.Sale = sale
       productList.Title = title
-      productList.Price = price
-      productList.SalePrice = salePrice
+      productList.Price = Number(price.replace(/,/gi, "").replace("원",""))
+      productList.SalePrice = Number(salePrice.replace(/,/gi, "").replace("원",""))
       productList.save(err => {
         if (err) {
           console.error(err)
