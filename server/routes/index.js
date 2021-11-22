@@ -3,14 +3,13 @@ const cheerio = require('cheerio')
 const axios = require('axios')
 const schedule = require('node-schedule')
 const ProductList = require('../models/product')
-
+const spawn = require('child_process').spawn;
+const parser = require('../utils/parser')
 const router = express.Router()
 
 const getDocument = async () => {
   try {
-    return await axios.get(
-      'https://store.musinsa.com/app/clearance/lists?clearance_year=&clearance_month=&clearance_week=&d_cat_cd=&brand=&sale_fr_rate=&sale_to_rate=&sort=pop_category&sub_sort=&page=1&list_kind=small&ex_soldout=&exclusive_yn=&price=&price1=&price2=',
-    )
+    return await axios.get(parser.getURL())
   } catch (error) {
     console.error(error)
   }
@@ -21,8 +20,9 @@ const crawling = () => {
     const $ = cheerio.load(document.data)
 
     const $li_box = $('.li_box').toArray()
+
     $li_box.forEach(element => {
-      let productList = new ProductList()
+      const product = new ProductList()
       const el = cheerio.load(element)
       const title = el('.list_info').text().trim()
       const src = el('.lazy').attr('data-original')
@@ -30,23 +30,35 @@ const crawling = () => {
       const price = el('.price').find('del').text()
       const salePrice = el('.price').text().split(price)[1].trim()
       const sale = el('.icon_new').text()
+      product.Image = img
+      product.Sale = sale
+      product.Title = title
+      product.Price = Number(price.replace(/,/gi, "").replace("원",""))
+      product.SalePrice = Number(salePrice.replace(/,/gi, "").replace("원",""))
+      const result = spawn('python3', [`${process.cwd()}/python/colorCluster.py`, img])
 
-      productList.Image = img
-      productList.Sale = sale
-      productList.Title = title
-      productList.Price = Number(price.replace(/,/gi, "").replace("원",""))
-      productList.SalePrice = Number(salePrice.replace(/,/gi, "").replace("원",""))
-      productList.save(err => {
-        if (err) {
-          console.error(err)
-          return
+      result.stdout.on('data', function(data) {
+        const arr = parser.getArrayParser(data);
+
+        for(const colors of arr){
+          const color = colors.filter(color=>color !== "");
+          product.Colors.push(parser.colorToRGB(color));
         }
-      })
+
+        product.save(err => {
+          if (err) {
+            console.error(err)
+            return
+          }
+        })
+      });
     })
   })
 }
 
-schedule.scheduleJob('0 0 * * * *', () => {
+
+
+schedule.scheduleJob('0 15 * * * *', () => {
   crawling().then(() => {
     console.log('crawling')
   })
