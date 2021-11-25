@@ -32,9 +32,10 @@ const fonts = {
 }
 
 const colors = {
-  red: '#ff4d4d',
-  yellow: '#ffff4d',
-  blue: '#0099ff',
+  chestnutrose: '#c44e63',
+  white: '#fff',
+  wildwatermelon: '#FF5374',
+  dustygray: '#999',
 }
 
 const size = {
@@ -52,16 +53,18 @@ const device = {
 
 const lightThemeColors = {
   ...colors,
-  primary: '#fff',
-  secondary: '#333',
+  primary: 'rgba(246, 246, 246, 0.5)',
+  secondary: 'rgb(70, 77, 82)',
   tertiary: '#d4d0c4',
+  forth: 'rgba(70, 77, 82, 0.082)',
 }
 
 const darkThemeColors = {
   ...colors,
-  primary: '#252734',
-  secondary: '#ababae',
-  tertiary: '#808080',
+  primary: 'rgb(16, 20, 33)',
+  secondary: 'rgb(183, 193, 204)',
+  tertiary: '#fff',
+  forth: 'rgba(207, 207, 207, 0.25)',
 }
 
 // 테마와 관련없이 공통으로 사용되는 변수들입니다
