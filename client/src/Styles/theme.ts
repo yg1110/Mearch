@@ -36,6 +36,7 @@ const colors = {
   white: '#fff',
   wildwatermelon: '#FF5374',
   dustygray: '#999',
+  royalblue: '#3d6eda',
 }
 
 const size = {
@@ -57,6 +58,8 @@ const lightThemeColors = {
   secondary: 'rgb(70, 77, 82)',
   tertiary: '#d4d0c4',
   forth: 'rgba(70, 77, 82, 0.082)',
+  fifth: '#f9fafc',
+  sixth: '#dfe0e5',
 }
 
 const darkThemeColors = {
@@ -65,6 +68,8 @@ const darkThemeColors = {
   secondary: 'rgb(183, 193, 204)',
   tertiary: '#fff',
   forth: 'rgba(207, 207, 207, 0.25)',
+  fifth: '#242f41',
+  sixth: '#161e2e',
 }
 
 // 테마와 관련없이 공통으로 사용되는 변수들입니다

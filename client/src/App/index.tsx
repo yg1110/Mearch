@@ -1,11 +1,15 @@
 import React, { FC } from 'react'
-import Providers from './Provideer'
+import { Provider } from 'react-redux'
+import { store } from '../Store'
+import Providers from './Provider'
 import Routes from '../Router'
 
 const App: FC = () => (
-  <Providers>
-    <Routes />
-  </Providers>
+  <Provider store={store}>
+    <Providers>
+      <Routes />
+    </Providers>
+  </Provider>
 )
 
-export default App
+export default React.memo(App)

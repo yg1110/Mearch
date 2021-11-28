@@ -2,9 +2,8 @@ import React, { FC } from 'react'
 import styled, { css } from 'styled-components'
 import { useSelector } from 'react-redux'
 
-import { ProductInfoListType } from '../../Types/productInfoType'
-import { productState } from '../../Reducer'
-import { ConvertRGBtoHex } from '../../Utils/ColorConverter'
+import { ProductInfoListType, ColorPoropsType } from '../../Types'
+import { StateType } from '../../Reducer'
 
 export interface ProductInfoListProps {
     infoList: ProductInfoListType
@@ -116,9 +115,6 @@ const Palette = styled.div`
   `}
 `
 
-interface ColorPoropsType {
-  color? : string
-}
 const Paint = styled.div`
   ${({ theme }) => css`
     display:inline-block;
@@ -127,7 +123,7 @@ const Paint = styled.div`
     margin: 0.5rem;
     border: 1px solid ${theme.colors.secondary};
     border-radius:50%;
-    background-color: ${(props:ColorPoropsType) => props.color || 'white'};
+    background-color: ${(props:ColorPoropsType) => props.color};
     &:hover {
       cursor: pointer;
     }
@@ -135,13 +131,17 @@ const Paint = styled.div`
 `
 
 const ProductInfoList:FC = () => {
-  const product = useSelector((state:productState) => state.product)
+  const product = useSelector((state:StateType) => state.product)
+
+  const open = (link:string) => {
+    window.open(link, '_blank')
+  }
 
   return (
     <Container>
-      {product.map(({ Image, Price, Sale, SalePrice, Title, Colors, _id }) => (
+      {product.map(({ Image, Price, Sale, SalePrice, Title, Colors, Type, Link, _id }) => (
         <Items key={_id}>
-          <Card>
+          <Card onClick={() => open(Link)}>
             <ImageContainer
               src={Image}
               alt={Title}
@@ -149,15 +149,16 @@ const ProductInfoList:FC = () => {
             <SaleContainer>{Sale}</SaleContainer>
             <Info>
               <TitleContainer title={Title}>{Title}</TitleContainer>
+              {Type}
               <div>
                 <PriceContainer>{Price}</PriceContainer>
                 <SalePriceContainer>{SalePrice}</SalePriceContainer>
               </div>
               <Palette>
-                {Colors.map(rgb => {
-                  const hex = ConvertRGBtoHex(rgb.R, rgb.G, rgb.B)
-                  return <Paint color={hex} />
-                })}
+                {Colors.map((hex:string, key:number) => (<Paint
+                  key={hex + key}
+                  color={hex}
+                />))}
               </Palette>
             </Info>
           </Card>
@@ -167,4 +168,4 @@ const ProductInfoList:FC = () => {
   )
 }
 
-export default ProductInfoList
+export default React.memo(ProductInfoList)

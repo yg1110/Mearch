@@ -1,0 +1,5 @@
+export const ACTIVE_COLOR = '#ffa800'
+export const NON_ACTIVE_COLOR = '#d5d5d5'
+export const THEME = 'Theme'
+export const LIGHT = 'light'
+export const DARK = 'dark'

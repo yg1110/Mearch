@@ -1,9 +1,3 @@
-export interface RGBType {
-  R: number;
-  G: number;
-  B: number;
-}
-
 export interface ProductInfo {
     Date: Date,
     Image: string,
@@ -11,9 +5,20 @@ export interface ProductInfo {
     Title: string,
     Price: number,
     SalePrice: number,
-    Colors: RGBType[],
+    Link: string,
+    Colors: string[],
+    ColorsCondition: number[],
+    Type: string,
     __v: number,
     _id: string
 }
 
+export interface ThemeType {
+    Theme:string
+}
+
 export type ProductInfoListType = ProductInfo[]
+
+export interface ColorPoropsType {
+    color : string
+}

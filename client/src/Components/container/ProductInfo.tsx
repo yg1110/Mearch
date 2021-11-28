@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { AxiosResponse } from 'axios'
 import http from '../../Api/http-common'
 import ProductInfoList from '../present/ProductInfoList'
-import { setProducInfotList } from '../../Actions'
+import { setProductInfotList } from '../../Actions'
 
 function ProductInfo() {
   const dispatch = useDispatch()
@@ -13,7 +13,7 @@ function ProductInfo() {
       .get('/')
       .then((res: AxiosResponse) => {
         const { data } = res
-        dispatch(setProducInfotList(data))
+        dispatch(setProductInfotList(data))
       })
       .catch(e => {
         console.log(e)
@@ -23,4 +23,4 @@ function ProductInfo() {
   return (<ProductInfoList />)
 }
 
-export default ProductInfo
+export default React.memo(ProductInfo)

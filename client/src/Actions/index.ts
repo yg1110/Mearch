@@ -1,11 +1,18 @@
-import { ProductInfo } from '../Types/productInfoType'
+import { ProductInfo } from '../Types'
 
-export const ADD = 'product/ADD'
+export const PPRODUCT_INFO_ADD = 'product/ADD'
+export const THEME_ADD = 'theme/ADD'
 
-export const setProducInfotList = (productInfo: ProductInfo) => ({
-  type: ADD,
+export const setProductInfotList = (productInfo: ProductInfo) => ({
+  type: PPRODUCT_INFO_ADD,
   payload: productInfo,
 })
 
-export type ProductListAction =
-  ReturnType<typeof setProducInfotList>
+export const setTheme = (theme: string) => ({
+  type: THEME_ADD,
+  payload: theme,
+})
+
+export type ActionType =
+  ReturnType<typeof setProductInfotList> |
+  ReturnType<typeof setTheme>
