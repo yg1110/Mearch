@@ -1,37 +1,25 @@
 
-const conditions = [
-    [0, 923202],
-    [923202, 2535361],
-    [2535361, 3371902],
-    [3371902, 6799988],
-    [6799988, 10507899],
-    [10507899, 11981162],
-    [11981162, 14282734],
-    [14282734, 15697309],
-    [15697309, 15945123],
-    [15945123, 16072355],
-    [16072355, 16443920],
-    [16443920, 16777215]
+const colors = [
+  '#ffffff',
+  '#8b8b8b',
+  '#000000',
+  '#ff0100',
+  '#ff00a1',
+  '#e9a399',
+  '#ff7200',
+  '#ffea00',
+  '#ceef00',
+  '#5b5a35',
+  '#0182f6',
+  '#8b004e',
+  '#b077cf',
+  '#c84a36',
+  '#e59600',
+  '#1e4380',
 ]
-    
-function colorToHex(color) {
-    const hexadecimal = color.toString(16)
-    return hexadecimal.length === 1 ? `0${hexadecimal}` : hexadecimal
-}
 
 module.exports = {
-    convertRGBtoHex: function(color) {
-        return `#${colorToHex(parseInt(color[0]))}${colorToHex(parseInt(color[1]))}${colorToHex(parseInt(color[2]))}`
+    getColor: function(index) {
+        return colors[index]
     },
-    
-    getColorCondition: function(color){
-        return color.map(hex=>{
-            const decimal = parseInt(hex.substring(1), 16);
-            return conditions.findIndex(condition=>{
-                const start = condition[0];
-                const end = condition[1];
-                return (decimal >= start && decimal <= end)
-            })
-        })
-    }
 }
