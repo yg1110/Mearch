@@ -1,8 +1,9 @@
-export const ACTIVE_COLOR = '#ffa800'
-export const NON_ACTIVE_COLOR = '#d5d5d5'
-export const THEME = 'Theme'
-export const LIGHT = 'light'
-export const DARK = 'dark'
+export const ACTIVE_COLOR = '#ffa800' as const
+export const NON_ACTIVE_COLOR = '#d5d5d5' as const
+export const THEME = 'Theme' as const
+export const LIGHT = 'light' as const
+export const DARK = 'dark' as const
+export const MENUS = ['전체', '상의', '바지', '아우터', '신발', '가방', '모자'] as const
 export const COLOR_LABEL = [
   '흰색, 아이보리',
   '은색, 라이트그레이, 회색, 다크그레이',
@@ -20,4 +21,22 @@ export const COLOR_LABEL = [
   '로즈골드, 레드브라운',
   '카키베이지, 카멜, 샌드, 베이지색',
   '데님, 연청, 중청, 진청, 흑청',
-]
+] as const
+export const COLORS = [
+  '#ffffff',
+  '#8b8b8b',
+  '#000000',
+  '#ff0100',
+  '#ff00a1',
+  '#e9a399',
+  '#ff7200',
+  '#ffea00',
+  '#ceef00',
+  '#5b5a35',
+  '#0182f6',
+  '#8b004e',
+  '#b077cf',
+  '#c84a36',
+  '#e59600',
+  '#1e4380',
+] as const

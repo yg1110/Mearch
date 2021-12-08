@@ -1,9 +1,7 @@
 import React, { FC } from 'react'
 import styled, { css } from 'styled-components'
-import { useSelector } from 'react-redux'
 
 import { ProductInfoListType, ColorPoropsType } from '../../Types'
-import { StateType } from '../../Reducer'
 
 export interface ProductInfoListProps {
     infoList: ProductInfoListType
@@ -92,18 +90,18 @@ const TitleContainer = styled.div`
   `}
 `
 
-const PriceContainer = styled.del`
-  ${({ theme }) => css`
-    font-size: 0.8rem;
-    color:${theme.colors.dustygray};
-  `}
-`
-
-const SalePriceContainer = styled.span`
+const PriceContainer = styled.span`
   ${({ theme }) => css`
     color:${theme.colors.wildwatermelon};
     font-size: 1.2rem;
     margin: 0 0.3rem;
+  `}
+`
+
+const SalePriceContainer = styled.del`
+  ${({ theme }) => css`
+    font-size: 0.8rem;
+    color:${theme.colors.dustygray};
   `}
 `
 
@@ -130,35 +128,40 @@ const Paint = styled.div`
   `}
 `
 
-const ProductInfoList:FC = () => {
-  const product = useSelector((state:StateType) => state.product)
-
+interface ProductInfoPropsType {
+  items: ProductInfoListType
+}
+const ProductInfoList:FC<ProductInfoPropsType> = props => {
   const open = (link:string) => {
     window.open(link, '_blank')
   }
 
+  const product = props.items
   return (
     <Container>
       {product.map(({ Image, Price, Sale, SalePrice, Title, Colors, Type, Link, _id }) => (
         <Items key={_id}>
-          <Card onClick={() => open(Link)}>
+          <Card>
             <ImageContainer
               src={Image}
               alt={Title}
+              onClick={() => open(Link)}
             />
             <SaleContainer>{Sale}</SaleContainer>
             <Info>
               <TitleContainer title={Title}>{Title}</TitleContainer>
               {Type}
               <div>
+                {SalePrice !== 0 && <SalePriceContainer>{SalePrice}</SalePriceContainer>}
                 <PriceContainer>{Price}</PriceContainer>
-                <SalePriceContainer>{SalePrice}</SalePriceContainer>
               </div>
               <Palette>
-                {Colors.map((hex:string, key:number) => (<Paint
-                  key={hex + key}
-                  color={hex}
-                />))}
+                {Colors.map((hex:string, key:number) => (
+                  <Paint
+                    key={hex + key}
+                    color={hex}
+                  />
+                ))}
               </Palette>
             </Info>
           </Card>

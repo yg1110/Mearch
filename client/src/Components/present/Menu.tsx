@@ -1,6 +1,8 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { ColorPoropsType } from '../../Types'
+import { COLOR_LABEL } from '../../Constants/Color'
+import { MENUS, COLORS } from '../../Constants/Menu'
 
 const MenuContents = styled.div`
     display: flex;
@@ -24,11 +26,16 @@ const Items = styled.div`
   display: flex;
 `
 
+type ItmePropsType = {
+  active: boolean
+}
+
 const Item = styled.span`
     ${({ theme }) => css`
         margin: 1rem;
         font-size: 1.2rem;
         font-weight: bold;
+        color: ${(props:ItmePropsType) => (props.active ? '#3d6eda' : 'rgb(183, 193, 204)')};
         &::after{
             display:block;
             content: '';
@@ -46,46 +53,105 @@ const Item = styled.span`
 `
 
 const Color = styled.div`
-    ${({ theme }) => css`
-        display:inline-block;
-        width:2rem;
-        height:2rem;
-        margin: 0.5rem;
-        border: 1px solid ${theme.colors.secondary};
-        border-radius:50%;
-        background-color: ${(props:ColorPoropsType) => props.color || 'white'};
-        &:hover {
-            cursor: pointer;
-        }
-    `}
+  display:inline-block;
+  width:2rem;
+  height:2rem;
+  margin: 0.5rem;
+  border: 1px solid ${(props:ColorPoropsType) => (props.color === '#ffffff' ? '#e8ebed' : props.color)};
+  border-radius:50%;
+  background-color: ${(props:ColorPoropsType) => props.color || 'white'};
+  &:hover {
+      cursor: pointer;
+  }
+`
+
+const Palette = styled.div`
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+`
+
+const CheckIcon = styled.div`
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: ${(props:ColorPoropsType) => (props.color === '#ffffff' ? 'black' : 'white')};
 `
 
 type ItemType = {
-  menus : string[],
-  colors : string[]
+  colorSearch: (index:number) => void,
+  categorySearch: (inderx:number) => void
 }
 interface MenuPropsType {
-  items: ItemType
+  items: ItemType,
+  categoryIndex: number,
+  colorIndex: number
 }
 const Menu:FC<MenuPropsType> = props => {
-  const { menus, colors } = props.items
+  const { colorSearch, categorySearch } = props.items
+  const { categoryIndex, colorIndex } = props
+  const menuRefs = useRef(new Array(MENUS.length))
+  const colorRefs = useRef(new Array(COLORS.length))
+
+  useEffect(() => {
+    const { current } = menuRefs
+    for (let i = 0; i < current.length; i += 1) {
+      if (i === categoryIndex) {
+        current[i].style.color = '#3d6eda'
+      } else {
+        current[i].style.color = 'rgb(183, 193, 204)'
+      }
+    }
+  }, [categoryIndex])
+
+  useEffect(() => {
+    const { current } = colorRefs
+    for (let i = 0; i < current.length; i += 1) {
+      if (i === colorIndex) {
+        current[i].style.display = 'block'
+      } else {
+        current[i].style.display = 'none'
+      }
+    }
+  }, [colorIndex])
+
   return (
     <MenuContents>
       <Items>
         <Category>
           카테고리
         </Category>
-        {menus && menus.map(menu => <Item key={menu}>{menu}</Item>)}
+        {MENUS.map((menu:string, index:number) => (
+          <Item
+            key={menu}
+            active={index === 0}
+            ref={el => { menuRefs.current[index] = el }}
+            onClick={() => categorySearch(index)}
+          >
+            {menu}
+          </Item>
+        ))}
       </Items>
       <Items>
         <Category>
           컬러
         </Category>
-        {colors && colors.map(color => (
-          <Color
-            key={color}
-            color={color}
-          />
+        {COLORS.map((color:string, key:number) => (
+          <Palette title={COLOR_LABEL[key]}>
+            <Color
+              key={color}
+              color={color}
+              onClick={() => colorSearch(key)}
+            />
+            <CheckIcon
+              color={color}
+              ref={el => { colorRefs.current[key] = el }}
+            >
+              &#8730;
+            </CheckIcon>
+          </Palette>
         ))}
       </Items>
     </MenuContents>

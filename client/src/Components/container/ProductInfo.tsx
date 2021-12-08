@@ -1,26 +1,29 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { AxiosResponse } from 'axios'
 import http from '../../Api/http-common'
 import ProductInfoList from '../present/ProductInfoList'
+import { StateType } from '../../Reducer'
 import { setProductInfotList } from '../../Actions'
 
 function ProductInfo() {
   const dispatch = useDispatch()
-
+  const product = useSelector((state:StateType) => state.product)
   useEffect(() => {
-    http
-      .get('/')
-      .then((res: AxiosResponse) => {
-        const { data } = res
-        dispatch(setProductInfotList(data))
-      })
-      .catch(e => {
-        console.log(e)
-      })
-  }, [])
+    if (product.length === 0) {
+      http
+        .get('/')
+        .then((res: AxiosResponse) => {
+          const { data } = res
+          dispatch(setProductInfotList(data))
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    }
+  }, [product])
 
-  return (<ProductInfoList />)
+  return (<ProductInfoList items={product} />)
 }
 
 export default React.memo(ProductInfo)

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { darken } from 'polished'
 import { useDispatch } from 'react-redux'
+import { AxiosResponse } from 'axios'
+import http from '../../Api/http-common'
 import Menu from '../present/Menu'
 import Theme from '../present/Theme'
 import { getStorage, setStorage } from '../../Utils/storage'
-import { setTheme } from '../../Actions'
-
+import { setProductInfotList, setTheme } from '../../Actions'
+import { MENUS, COLORS } from '../../Constants/Menu'
 import {
   ACTIVE_COLOR, LIGHT, NON_ACTIVE_COLOR, THEME, DARK,
 } from '../../Constants/Color'
@@ -15,6 +17,8 @@ function Header() {
   const dispatch = useDispatch()
   const [lightColor, setLightColor] = useState(NON_ACTIVE_COLOR)
   const [darkColor, setDarkColor] = useState(NON_ACTIVE_COLOR)
+  const [categoryIndex, setCategoryIndex] = useState<number>(0)
+  const [colorIndex, setColorIndex] = useState<number>(-1)
 
   useEffect(() => {
     const theme = getStorage(THEME)
@@ -27,21 +31,34 @@ function Header() {
     }
   }, [getStorage(THEME)])
 
-  const menus:string[] = ['상의', '바지', '아우터', '신발', '가방', '모자']
-  const colors:string[] = [
-    '#ed1917',
-    '#f4a924',
-    '#f5d422',
-    '#f1f223',
-    '#a6dc0e',
-    '#35B400',
-    '#99D0E9',
-    '#3132FD',
-    '#1C2C85',
-    '#FFFFFF',
-    '#C6C6C6',
-    '#1A1A1A',
-  ]
+  const colorSearch = (id:number) => {
+    setCategoryIndex(0)
+    setColorIndex(id)
+    http
+      .get('/colors', { params: { color: COLORS[id] } })
+      .then((res: AxiosResponse) => {
+        const { data } = res
+        dispatch(setProductInfotList(data))
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+
+  const categorySearch = (index:number) => {
+    setCategoryIndex(index)
+    setColorIndex(-1)
+    const category = MENUS[index]
+    http
+      .get('/category', { params: { category } })
+      .then((res: AxiosResponse) => {
+        const { data } = res
+        dispatch(setProductInfotList(data))
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
 
   const changeLightTheme = () => {
     setStorage(THEME, LIGHT)
@@ -83,8 +100,10 @@ function Header() {
   }
 
   const menuItems = {
-    menus,
-    colors,
+    MENUS,
+    COLORS,
+    colorSearch,
+    categorySearch,
   }
 
   const Container = styled.div`
@@ -96,7 +115,11 @@ function Header() {
 
   return (
     <Container>
-      <Menu items={menuItems} />
+      <Menu
+        items={menuItems}
+        categoryIndex={categoryIndex}
+        colorIndex={colorIndex}
+      />
       <Theme items={themeItems} />
     </Container>
   )

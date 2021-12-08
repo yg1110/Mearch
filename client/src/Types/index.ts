@@ -7,7 +7,6 @@ export interface ProductInfo {
     SalePrice: number,
     Link: string,
     Colors: string[],
-    ColorsCondition: number[],
     Type: string,
     __v: number,
     _id: string

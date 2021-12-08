@@ -19,7 +19,7 @@ export const productReducer = (
   switch (action.type) {
     case PPRODUCT_INFO_ADD: {
       const productAction = action as ReturnType<typeof setProductInfotList>
-      return { ...state, product: state.product.concat(productAction.payload) }
+      return { ...state, product: productAction.payload }
     }
     case THEME_ADD: {
       const themeAction = action as ReturnType<typeof setTheme>
