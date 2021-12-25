@@ -147,7 +147,7 @@ const ProductInfoList:FC<ProductInfoPropsType> = props => {
               alt={Title}
               onClick={() => open(Link)}
             />
-            <SaleContainer>{Sale}</SaleContainer>
+            { Sale !== '' && <SaleContainer>{Sale}</SaleContainer>}
             <Info>
               <TitleContainer title={Title}>{Title}</TitleContainer>
               {Type}

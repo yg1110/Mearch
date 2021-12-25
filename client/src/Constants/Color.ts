@@ -21,3 +21,6 @@ export const COLOR_LABEL = [
   '카키베이지, 카멜, 샌드, 베이지색',
   '데님, 연청, 중청, 진청, 흑청',
 ]
+
+export const FILTER_COLOR = 'filterColor'
+export const FITLER_CATEGORYS = 'fitlerCategorys'

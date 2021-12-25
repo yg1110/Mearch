@@ -8,17 +8,16 @@ import Menu from '../present/Menu'
 import Theme from '../present/Theme'
 import { getStorage, setStorage } from '../../Utils/storage'
 import { setProductInfotList, setTheme } from '../../Actions'
-import { MENUS, COLORS } from '../../Constants/Menu'
 import {
-  ACTIVE_COLOR, LIGHT, NON_ACTIVE_COLOR, THEME, DARK,
+  ACTIVE_COLOR, LIGHT, NON_ACTIVE_COLOR, THEME, DARK, FILTER_COLOR, FITLER_CATEGORYS,
 } from '../../Constants/Color'
+import { filterTagType } from '../../Types'
 
 function Header() {
   const dispatch = useDispatch()
-  const [lightColor, setLightColor] = useState(NON_ACTIVE_COLOR)
-  const [darkColor, setDarkColor] = useState(NON_ACTIVE_COLOR)
-  const [categoryIndex, setCategoryIndex] = useState<number>(0)
-  const [colorIndex, setColorIndex] = useState<number>(-1)
+  const [lightColor, setLightColor] = useState<string>(NON_ACTIVE_COLOR)
+  const [darkColor, setDarkColor] = useState<string>(NON_ACTIVE_COLOR)
+  const [filterTags, setFilterTags] = useState<filterTagType>({ color: [], category: [] })
 
   useEffect(() => {
     const theme = getStorage(THEME)
@@ -31,33 +30,94 @@ function Header() {
     }
   }, [getStorage(THEME)])
 
-  const colorSearch = (id:number) => {
-    setCategoryIndex(0)
-    setColorIndex(id)
-    http
-      .get('/colors', { params: { color: COLORS[id] } })
-      .then((res: AxiosResponse) => {
-        const { data } = res
-        dispatch(setProductInfotList(data))
+  useEffect(() => {
+    if (getStorage(FILTER_COLOR) === '' && getStorage(FITLER_CATEGORYS) === '') {
+      setFilterTags({
+        ...filterTags,
+        color: [],
+        category: [],
       })
-      .catch(e => {
-        console.log(e)
+    } else if (getStorage(FILTER_COLOR) !== '' && getStorage(FITLER_CATEGORYS) === '') {
+      setFilterTags({
+        ...filterTags,
+        category: [],
+        color: JSON.parse(getStorage(FILTER_COLOR)),
       })
+    } else if (getStorage(FILTER_COLOR) === '' && getStorage(FITLER_CATEGORYS) !== '') {
+      setFilterTags({
+        ...filterTags,
+        category: JSON.parse(getStorage(FITLER_CATEGORYS)),
+        color: [],
+      })
+    } else {
+      setFilterTags({
+        ...filterTags,
+        category: JSON.parse(getStorage(FITLER_CATEGORYS)),
+        color: JSON.parse(getStorage(FILTER_COLOR)),
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (filterTags.color.length > 0 && filterTags.category.length > 0) {
+      const filterColor = JSON.parse(getStorage(FILTER_COLOR))
+      const filteerCategory = JSON.parse(getStorage(FITLER_CATEGORYS))
+
+      http
+        .post('/search', { color: filterColor, Type: filteerCategory })
+        .then((res: AxiosResponse) => {
+          const { data } = res
+          dispatch(setProductInfotList(data))
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    }
+  }, [filterTags])
+
+  const changeFilterColors = (color:string) => {
+    if (filterTags.color.includes(color)) {
+      const filterColor = filterTags.color.filter((filterColor:string) => filterColor !== color)
+      setStorage(FILTER_COLOR, JSON.stringify(filterColor))
+      setFilterTags({
+        ...filterTags,
+        color: filterColor,
+      })
+    } else {
+      const filterColor = filterTags.color.concat(color)
+      setStorage(FILTER_COLOR, JSON.stringify(filterColor))
+      setFilterTags({
+        ...filterTags,
+        color: filterColor,
+      })
+    }
   }
 
-  const categorySearch = (index:number) => {
-    setCategoryIndex(index)
-    setColorIndex(-1)
-    const category = MENUS[index]
-    http
-      .get('/category', { params: { category } })
-      .then((res: AxiosResponse) => {
-        const { data } = res
-        dispatch(setProductInfotList(data))
+  const changeFilterCategory = (category:string|null) => {
+    if (!category) {
+      setStorage(FITLER_CATEGORYS, JSON.stringify([]))
+      setFilterTags({
+        ...filterTags,
+        category: [],
       })
-      .catch(e => {
-        console.log(e)
+      return
+    }
+
+    if (filterTags.category.includes(category)) {
+      const now = filterTags.category.filter((fitlerCategory:string) => fitlerCategory !== category)
+      setStorage(FITLER_CATEGORYS, JSON.stringify(now))
+      setFilterTags({
+        ...filterTags,
+        category: now,
       })
+    } else {
+      const now = filterTags.category.concat(category)
+      setStorage(FITLER_CATEGORYS, JSON.stringify(now))
+      setFilterTags({
+        ...filterTags,
+        category: now,
+      })
+    }
   }
 
   const changeLightTheme = () => {
@@ -100,10 +160,9 @@ function Header() {
   }
 
   const menuItems = {
-    MENUS,
-    COLORS,
-    colorSearch,
-    categorySearch,
+    filterTags,
+    changeFilterColors,
+    changeFilterCategory,
   }
 
   const Container = styled.div`
@@ -115,11 +174,7 @@ function Header() {
 
   return (
     <Container>
-      <Menu
-        items={menuItems}
-        categoryIndex={categoryIndex}
-        colorIndex={colorIndex}
-      />
+      <Menu items={menuItems} />
       <Theme items={themeItems} />
     </Container>
   )

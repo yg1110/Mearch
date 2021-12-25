@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useRef } from 'react'
+import React, { FC, useRef } from 'react'
 import styled, { css } from 'styled-components'
-import { ColorPoropsType } from '../../Types'
+import { ColorPoropsType, filterTagType } from '../../Types'
 import { COLOR_LABEL } from '../../Constants/Color'
 import { MENUS, COLORS } from '../../Constants/Menu'
 
@@ -27,29 +27,37 @@ const Items = styled.div`
 `
 
 type ItmePropsType = {
-  active: boolean
+  children: string
+  filterCategorys: string[]
 }
 
-const Item = styled.span`
-    ${({ theme }) => css`
-        margin: 1rem;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: ${(props:ItmePropsType) => (props.active ? '#3d6eda' : 'rgb(183, 193, 204)')};
-        &::after{
-            display:block;
-            content: '';
-            border-bottom: solid 2px ${theme.colors.royalblue};  
-            transform: scaleX(0);
-            transition: transform 250ms ease-in-out;
-        }
-        &:hover:after{
-            transform: scaleX(1);
-        }
-        &:hover{
-            cursor: pointer;
-        }
-    `}
+const Item = styled.span<ItmePropsType>`
+  ${({ theme }) => css`
+    margin: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: ${(props:ItmePropsType) => {
+    if (props.filterCategorys.length === 0) {
+      return props.children === '전체' ? '#3d6eda' : 'rgb(183, 193, 204)'
+    }
+
+    return props.filterCategorys.includes(props.children) ? '#3d6eda' : 'rgb(183, 193, 204)'
+  }
+};
+    &::after{
+      display:block;
+      content: '';
+      border-bottom: solid 2px ${theme.colors.royalblue};  
+      transform: scaleX(0);
+      transition: transform 250ms ease-in-out;
+    }
+    &:hover:after{
+      transform: scaleX(1);
+    }
+    &:hover{
+      cursor: pointer;
+    }
+  `}
 `
 
 const Color = styled.div`
@@ -59,7 +67,7 @@ const Color = styled.div`
   margin: 0.5rem;
   border: 1px solid ${(props:ColorPoropsType) => (props.color === '#ffffff' ? '#e8ebed' : props.color)};
   border-radius:50%;
-  background-color: ${(props:ColorPoropsType) => props.color || 'white'};
+  background-color: ${(props:ColorPoropsType) => (props.color || 'white')};
   &:hover {
       cursor: pointer;
   }
@@ -72,50 +80,56 @@ const Palette = styled.div`
 `
 
 const CheckIcon = styled.div`
-  display: none;
+  display: ${((props:ColorPoropsType) => {
+    if (props.filterColors) {
+      return props.filterColors.includes(props.color) ? 'block' : 'none'
+    }
+    return 'none'
+  })};
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  color: ${(props:ColorPoropsType) => (props.color === '#ffffff' ? 'black' : 'white')};
+  color: ${((props:ColorPoropsType) => {
+    const condition1 = props.color === '#ffffff'
+    const condition2 = props.color === '#ffea00'
+    const condition3 = props.color === '#ceef00'
+    return (condition1 || condition2 || condition3) ? 'black' : 'white'
+  })};
 `
 
 type ItemType = {
-  colorSearch: (index:number) => void,
-  categorySearch: (inderx:number) => void
+  changeFilterColors: (color:string) => void,
+  changeFilterCategory: (category:string|null) => void,
+  filterTags:filterTagType
 }
 interface MenuPropsType {
   items: ItemType,
-  categoryIndex: number,
-  colorIndex: number
 }
 const Menu:FC<MenuPropsType> = props => {
-  const { colorSearch, categorySearch } = props.items
-  const { categoryIndex, colorIndex } = props
+  const { filterTags, changeFilterColors, changeFilterCategory } = props.items
   const menuRefs = useRef(new Array(MENUS.length))
   const colorRefs = useRef(new Array(COLORS.length))
 
-  useEffect(() => {
-    const { current } = menuRefs
-    for (let i = 0; i < current.length; i += 1) {
-      if (i === categoryIndex) {
-        current[i].style.color = '#3d6eda'
-      } else {
-        current[i].style.color = 'rgb(183, 193, 204)'
-      }
+  const categoryClick = (index:number) => {
+    if (index === 0) {
+      changeFilterCategory(null)
+      return
     }
-  }, [categoryIndex])
 
-  useEffect(() => {
+    changeFilterCategory(MENUS[index])
+  }
+
+  const colorClick = (key:number) => {
     const { current } = colorRefs
-    for (let i = 0; i < current.length; i += 1) {
-      if (i === colorIndex) {
-        current[i].style.display = 'block'
-      } else {
-        current[i].style.display = 'none'
-      }
+    const isVisible = current[key].style.display
+    if (isVisible === 'none' || isVisible === '') {
+      current[key].style.display = 'block'
+    } else {
+      current[key].style.display = 'none'
     }
-  }, [colorIndex])
+    changeFilterColors(COLORS[key])
+  }
 
   return (
     <MenuContents>
@@ -126,9 +140,9 @@ const Menu:FC<MenuPropsType> = props => {
         {MENUS.map((menu:string, index:number) => (
           <Item
             key={menu}
-            active={index === 0}
+            filterCategorys={filterTags.category}
             ref={el => { menuRefs.current[index] = el }}
-            onClick={() => categorySearch(index)}
+            onClick={() => categoryClick(index)}
           >
             {menu}
           </Item>
@@ -139,14 +153,17 @@ const Menu:FC<MenuPropsType> = props => {
           컬러
         </Category>
         {COLORS.map((color:string, key:number) => (
-          <Palette title={COLOR_LABEL[key]}>
+          <Palette
+            title={COLOR_LABEL[key]}
+            key={color}
+          >
             <Color
-              key={color}
               color={color}
-              onClick={() => colorSearch(key)}
+              onClick={() => colorClick(key)}
             />
             <CheckIcon
               color={color}
+              filterColors={filterTags.color}
               ref={el => { colorRefs.current[key] = el }}
             >
               &#8730;

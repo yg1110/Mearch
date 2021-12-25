@@ -20,4 +20,10 @@ export type ProductInfoListType = ProductInfo[]
 
 export interface ColorPoropsType {
     color : string
+    filterColors?: string[]
+}
+
+export interface filterTagType {
+  color:string[],
+  category: string[]
 }
