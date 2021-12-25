@@ -79,7 +79,7 @@ const parsing = (document, type, color) => {
 
 const crawling = () => {
   const type = ["상의", "바지", "아우터", "신발", "가방", "모자"]
-  for(let i=0; i<=15; i++){
+  for(let i=11; i<=11; i++){
     for(let j=0; j<=5; j++){
       getDocument(j, i).then(document => {
         parsing(document, type[j], i)
@@ -108,24 +108,21 @@ router.get('/crawling', (req, res) => {
 })
 
 
-router.get('/colors', (req, res) => {
-  const color = req.query.color;
-  ProductList.find({Colors:{$in:[color]}})
-    .limit(90)
-    .then(productList => {
-      res.send(productList)
-    })
-    .catch(e => res.send(e))
-})
+router.post('/search', (req, res) => {
+  const color = req.body.color
+  const type = req.body.Type
 
-router.get('/category', (req, res) => {
-  const Type = req.query.category;
-  ProductList.find({Type})
-    .limit(90)
-    .then(productList => {
-      res.send(productList)
-    })
-    .catch(e => res.send(e))
+  const filter1 = color.map(v => ({Colors: {'$in': [v]}}))
+  const filter2 = type.map(v => ({Type:v}))
+  ProductList.find().and([
+    { $or: filter1 },
+    { $or: filter2 }
+  ])
+  .limit(90)
+  .then(productList => {
+    res.send(productList)
+  })
+.catch(e => res.send(e))
 })
 
 

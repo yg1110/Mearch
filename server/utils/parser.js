@@ -38,7 +38,6 @@ module.exports = {
             // 데님, 연청, 중청, 진청, 흑청
             '16%2C57%2C58%2C59%2C60'
         ]
-        console.log(typeIndex, type[typeIndex], color[colorIndex])
         return prefix + type[typeIndex] + middle + color[colorIndex] + suffix;
     },
     getArrayParser: function(array) {
