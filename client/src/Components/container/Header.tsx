@@ -58,21 +58,31 @@ function Header() {
     }
   }, [])
 
-  useEffect(() => {
-    if (filterTags.color.length > 0 && filterTags.category.length > 0) {
-      const filterColor = JSON.parse(getStorage(FILTER_COLOR))
-      const filteerCategory = JSON.parse(getStorage(FITLER_CATEGORYS))
-
-      http
-        .post('/search', { color: filterColor, Type: filteerCategory })
-        .then((res: AxiosResponse) => {
-          const { data } = res
-          dispatch(setProductInfotList(data))
-        })
-        .catch(e => {
-          console.log(e)
-        })
+  const initStorage = () => {
+    const color = getStorage(FILTER_COLOR)
+    const category = getStorage(FITLER_CATEGORYS)
+    if (color === '') {
+      setStorage(FILTER_COLOR, '[]')
     }
+    if (category === '') {
+      setStorage(FITLER_CATEGORYS, '[]')
+    }
+  }
+
+  useEffect(() => {
+    initStorage()
+    const filterColor = JSON.parse(getStorage(FILTER_COLOR))
+    const filteerCategory = JSON.parse(getStorage(FITLER_CATEGORYS))
+
+    http
+      .post('/search', { color: filterColor, Type: filteerCategory })
+      .then((res: AxiosResponse) => {
+        const { data } = res
+        dispatch(setProductInfotList(data))
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }, [filterTags])
 
   const changeFilterColors = (color:string) => {
