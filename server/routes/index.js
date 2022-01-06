@@ -7,6 +7,7 @@ const spawn = require('child_process').spawn;
 const parser = require('../utils/parser')
 const colorConverter = require('../utils/colorConverter')
 const { xml } = require('cheerio/lib/static')
+const { filter } = require('domutils')
 const router = express.Router()
 
 const getDocument = async (type, color) => {
@@ -114,15 +115,43 @@ router.post('/search', (req, res) => {
 
   const filter1 = color.map(v => ({Colors: {'$in': [v]}}))
   const filter2 = type.map(v => ({Type:v}))
-  ProductList.find().and([
-    { $or: filter1 },
-    { $or: filter2 }
-  ])
-  .limit(90)
-  .then(productList => {
-    res.send(productList)
-  })
-.catch(e => res.send(e))
+
+
+  if(filter1.length > 0 && filter2.length > 0){
+    ProductList.find().and([
+      { $or: filter1 },
+      { $or: filter2 }
+    ])
+    .limit(200)
+    .then(productList => {
+      res.send(productList)
+    })
+    .catch(e => res.send(e))
+  }
+  else if(filter1.length > 0 && filter2.length === 0){
+    ProductList.find({$or : filter1})
+    .limit(200)
+    .then(productList => {
+      res.send(productList)
+    })
+    .catch(e => res.send(e))
+  }
+  else if(filter1.length === 0 && filter2.length > 0){
+    ProductList.find({$or : filter2})
+    .limit(200)
+    .then(productList => {
+      res.send(productList)
+    })
+    .catch(e => res.send(e))
+  }
+  else{
+    ProductList.find({})
+    .limit(200)
+    .then(result => {
+      res.send(result)
+      return;
+    })
+  }
 })
 
 
