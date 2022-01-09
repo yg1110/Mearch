@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { darken } from 'polished'
 import { useDispatch } from 'react-redux'
 import { AxiosResponse } from 'axios'
@@ -12,9 +12,33 @@ import {
   ACTIVE_COLOR, LIGHT, NON_ACTIVE_COLOR, THEME, DARK, FILTER_COLOR, FITLER_CATEGORYS,
 } from '../../Constants/Color'
 import { filterTagType } from '../../Types'
+import Modal from '../present/Modal'
 
-function Header() {
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+`
+
+const ModalButton = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 7rem;
+    height: 3rem;
+    padding: 1rem;
+    background: ${theme.colors.fifth} no-repeat 50%;
+    border: 1px solid ${theme.colors.sixth};
+    font-weight: bold;
+    cursor: pointer;
+  `}
+`
+
+const Header = () => {
   const dispatch = useDispatch()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const [lightColor, setLightColor] = useState<string>(NON_ACTIVE_COLOR)
   const [darkColor, setDarkColor] = useState<string>(NON_ACTIVE_COLOR)
   const [filterTags, setFilterTags] = useState<filterTagType>({ color: [], category: [] })
@@ -175,17 +199,23 @@ function Header() {
     changeFilterCategory,
   }
 
-  const Container = styled.div`
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-  `
+  const openModal = () => {
+    setIsOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsOpen(false)
+  }
 
   return (
     <Container>
       <Menu items={menuItems} />
+      <ModalButton onClick={openModal}>조합하기</ModalButton>
       <Theme items={themeItems} />
+      <Modal
+        isOpen={isOpen}
+        closeModal={closeModal}
+      />
     </Container>
   )
 }

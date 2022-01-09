@@ -1,8 +1,8 @@
 import React, { FC, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { ColorPoropsType, filterTagType } from '../../Types'
-import { COLOR_LABEL } from '../../Constants/Color'
-import { MENUS, COLORS } from '../../Constants/Menu'
+import { COLOR_LABEL, COLORS } from '../../Constants/Color'
+import { MENUS } from '../../Constants/Menu'
 
 const MenuContents = styled.div`
     display: flex;

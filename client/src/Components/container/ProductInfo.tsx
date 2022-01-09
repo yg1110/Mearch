@@ -23,7 +23,11 @@ function ProductInfo() {
     }
   }, [product])
 
-  return (<ProductInfoList items={product} />)
+  return (
+    <React.Fragment>
+      <ProductInfoList items={product} />
+    </React.Fragment>
+  )
 }
 
 export default React.memo(ProductInfo)
