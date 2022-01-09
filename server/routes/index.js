@@ -108,6 +108,30 @@ router.get('/crawling', (req, res) => {
   res.send("crawling 중")
 })
 
+router.post('/clothset', (req, res) => {
+  let top = req.body.Top
+  let bottom = req.body.Bottom
+  top = top === "#eee6c4" ? "#ffffff" : top
+  bottom = bottom === "#eee6c4" ? "#ffffff" : bottom
+  ProductList.find().or([
+    {
+        $and:[
+            {$or:[{Colors:{$in:[top]}}]},
+            {Type:"상의"}
+        ]
+    },
+    {
+        $and:[
+            {$or:[{Colors:{$in:[bottom]}}]},
+            {Type:"바지"}
+        ]
+    },
+  ])
+  .then(productList => {
+    res.send(productList)
+  })
+  .catch(e => res.send(e))
+})
 
 router.post('/search', (req, res) => {
   const color = req.body.color
