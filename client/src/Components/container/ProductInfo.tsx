@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AxiosResponse } from 'axios'
 import http from '../../Api/http-common'
 import ProductInfoList from '../present/ProductInfoList'
-import { StateType } from '../../Reducer'
-import { setProductInfotList } from '../../Actions'
+import { StateType } from '../../Types/index'
+import { setProductInfotList } from '../../Middleware/Actions'
 
 function ProductInfo() {
   const dispatch = useDispatch()

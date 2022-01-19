@@ -1,6 +1,50 @@
-import React from 'react'
+import React, { FC } from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+
+import styled, { ThemeProvider, css } from 'styled-components'
+import { useSelector, Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+import { darkTheme, lightTheme } from './Styles/theme'
+import { GlobalTheme } from './Styles'
+import { LIGHT } from './Constants/Color'
+import { store } from './Middleware/Store'
+import { StateType } from './Types'
+import Routes from './Router'
+
+const ThemeMode = styled.div`
+  ${({ theme }) => css`
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.secondary};
+    width: 100%;
+    height: 100%;
+    min-width: 100vw;
+    min-height: 100vh;
+  `}
+`
+
+const Providers: FC = ({ children }) => {
+  const theme = useSelector((state:StateType) => state.theme)
+  return (
+    <BrowserRouter>
+      <ThemeProvider theme={theme === LIGHT ? lightTheme : darkTheme}>
+        <GlobalTheme />
+        <React.Suspense fallback={<p>loading...</p>}>
+          <ThemeMode>
+            {children}
+          </ThemeMode>
+        </React.Suspense>
+      </ThemeProvider>
+    </BrowserRouter>
+  )
+}
+
+const App: FC = () => (
+  <Provider store={store}>
+    <Providers>
+      <Routes />
+    </Providers>
+  </Provider>
+)
 
 ReactDOM.render(
   <React.StrictMode>

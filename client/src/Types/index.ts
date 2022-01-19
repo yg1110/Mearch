@@ -27,3 +27,8 @@ export interface filterTagType {
   color:string[],
   category: string[]
 }
+
+export type StateType = {
+    product: ProductInfoListType,
+    theme: string
+};
