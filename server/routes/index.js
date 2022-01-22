@@ -98,7 +98,11 @@ router.get('/', (req, res) => {
   ProductList.find({})
     .limit(90)
     .then(result => {
-      res.send(result)
+      res.send({data: result, message: 'success'})
+      return;
+    })
+    .catch(e => {
+      res.send({data: null, message: `fail ${e}`})
       return;
     })
 })
@@ -108,9 +112,20 @@ router.get('/crawling', (req, res) => {
   res.send("crawling 중")
 })
 
+router.get('/colorset', (req, res) => {
+  const colorSet = colorConverter.getClothColorSet();
+
+  if(colorSet.length > 0){
+    res.send({data : colorConverter.getClothColorSet(), message: 'success'})
+  }
+  else{
+    res.send({data : null, message: 'Colorset Array is Empty'})
+  }
+})
+
 router.post('/clothset', (req, res) => {
-  let top = req.body.Top
-  let bottom = req.body.Bottom
+  let top = req.body.top
+  let bottom = req.body.bottom
   top = top === "#eee6c4" ? "#ffffff" : top
   bottom = bottom === "#eee6c4" ? "#ffffff" : bottom
   ProductList.find().or([
@@ -127,15 +142,23 @@ router.post('/clothset', (req, res) => {
         ]
     },
   ])
-  .then(productList => {
-    res.send(productList)
-  })
-  .catch(e => res.send(e))
+  .then(productList => 
+    res.send({
+      data: productList,
+      message: 'success'
+    })
+  )
+  .catch(e =>
+    res.send({
+      data: null,
+      message: `fail ${e}`
+    })
+  )
 })
 
 router.post('/search', (req, res) => {
   const color = req.body.color
-  const type = req.body.Type
+  const type = req.body.type
 
   const filter1 = color.map(v => ({Colors: {'$in': [v]}}))
   const filter2 = type.map(v => ({Type:v}))
@@ -147,34 +170,66 @@ router.post('/search', (req, res) => {
       { $or: filter2 }
     ])
     .limit(200)
-    .then(productList => {
-      res.send(productList)
-    })
-    .catch(e => res.send(e))
+    .then(productList => 
+      res.send({
+        data: productList,
+        message: 'success'
+      })
+    )
+    .catch(e =>
+      res.send({
+        data: null,
+        message: `fail ${e}`
+      })
+    )
   }
   else if(filter1.length > 0 && filter2.length === 0){
     ProductList.find({$or : filter1})
     .limit(200)
-    .then(productList => {
-      res.send(productList)
-    })
-    .catch(e => res.send(e))
+    .then(productList =>
+      res.send({
+        data: productList,
+        message: 'success'
+      })
+    )
+    .catch(e => 
+      res.send({
+        data: null,
+        message: `fail ${e}`
+      })
+    )
   }
   else if(filter1.length === 0 && filter2.length > 0){
     ProductList.find({$or : filter2})
     .limit(200)
-    .then(productList => {
-      res.send(productList)
-    })
-    .catch(e => res.send(e))
+    .then(productList =>
+      res.send({
+        data: productList,
+        message: 'success'
+      })
+    )
+    .catch(e => 
+      res.send({
+        data: null,
+        message: `fail ${e}`
+      })
+    )
   }
   else{
     ProductList.find({})
     .limit(200)
-    .then(result => {
-      res.send(result)
-      return;
-    })
+    .then(productList => 
+      res.send({
+        data: productList,
+        message: 'success'
+      })
+    )
+    .catch(e => 
+      res.send({
+        data: null,
+        message: `fail ${e}`
+      })
+    )
   }
 })
 
