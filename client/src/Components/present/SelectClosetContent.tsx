@@ -1,50 +1,22 @@
-import React, { useContext, useState } from 'react'
-import styled from 'styled-components'
-import { AxiosResponse } from 'axios'
+import React, { useContext, useEffect, useState, FC } from 'react'
 import { useDispatch } from 'react-redux'
-import { DataContext, DataContextValues } from '../container/Modal'
-import { CLOTHCOLORSET } from '../../Constants/Color'
+import { DataContext } from '../container/Modal'
 import { ReactComponent as Top } from '../../Assets/top.svg'
 import { ReactComponent as Bottom } from '../../Assets/bottom.svg'
-
-import http from '../../Api/http-common'
+import RestService from '../../Api/http-common'
 import { setProductInfotList } from '../../Middleware/Actions'
-import { Button, Close, SelectCloset } from '../../Styles/Header'
+import { Button } from '../../Styles'
+import {
+  Close, SelectCloset, Closet,
+  Cloth, RadioButton, ButtonContainer,
+} from '../../Styles/Modal'
+import { ColorSetPropsType, DataContextValues } from '../../Types'
 
-const Cloth = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0.5rem;
-  `
-
-const Closet = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-    height: 30rem;
-    overflow-y: auto;
-    flex-wrap : wrap;
-  `
-
-const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin: 0.5rem 1.5rem;
-  `
-
-const RadioButton = styled.input`
-    margin:0.5rem;
-    &:hover {
-      cursor: pointer;
-      color:black;
-    }
-  `
-
-export const SelectClosetContent = () => {
+export const SelectClosetContent:FC<ColorSetPropsType> = props => {
   const dispatch = useDispatch()
   const { makeContentRef, selectContentRef, closeModal } = useContext(DataContext) as DataContextValues
   const [chooseCloth, setChooseCloth] = useState<number>(-1)
+  const { colorSet } = props
 
   const onAddCloth = () => {
     makeContentRef.current.style.zIndex = '2'
@@ -56,21 +28,18 @@ export const SelectClosetContent = () => {
     setChooseCloth(i)
   }
 
-  const onSumbitCloth = () => {
+  const onSubmitCloth = async () => {
     if (chooseCloth === -1) return false
-    const clothSet = CLOTHCOLORSET[chooseCloth]
-    http
-      .post('/clothset', { Top: clothSet[0], Bottom: clothSet[1] })
-      .then((res: AxiosResponse) => {
-        const { data } = res
-        if (data.length > 0) {
-          closeModal()
-          dispatch(setProductInfotList(data))
-        }
-      })
-      .catch(e => {
-        console.log(e)
-      })
+    const clothSet = colorSet[chooseCloth]
+    const { data, message } = await RestService.getClothset(clothSet[0], clothSet[1])
+
+    if (message === 'success') {
+      closeModal()
+      dispatch(setProductInfotList(data))
+    } else {
+      // error
+      console.log(message)
+    }
 
     return true
   }
@@ -78,11 +47,10 @@ export const SelectClosetContent = () => {
   return (
     <SelectCloset
       ref={selectContentRef}
-      name='select'
     >
       <Close onClick={closeModal}>x</Close>
       <Closet>
-        {CLOTHCOLORSET.map((set:string[], i:number) => (
+        {colorSet.map((set:string[], i:number) => (
           <Cloth key={set[0] + set[1] + i}>
             <Top
               fill={set[0]}
@@ -109,7 +77,7 @@ export const SelectClosetContent = () => {
         </Button>
         <Button
           width='10rem'
-          onClick={() => onSumbitCloth()}
+          onClick={() => onSubmitCloth()}
         >
           선택한 조합 옷 보기
         </Button>

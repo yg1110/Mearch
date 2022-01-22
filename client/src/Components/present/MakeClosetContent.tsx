@@ -1,58 +1,22 @@
-import React, { useContext, useState } from 'react'
-import styled from 'styled-components'
-import { ColorPoropsType } from '../../Types'
-import { DataContext, DataContextValues } from '../container/Modal'
-import { CLOTHCOLORSET, COLORS1, COLORS2 } from '../../Constants/Color'
+import React, { useContext, useState, FC } from 'react'
+import { ColorSetPropsType, DataContextValues } from '../../Types'
+import { DataContext } from '../container/Modal'
+import { COLORS } from '../../Constants/Color'
 import { ReactComponent as Top } from '../../Assets/top.svg'
 import { ReactComponent as Bottom } from '../../Assets/bottom.svg'
-import { Button, Close, SelectCloset } from '../../Styles/Header'
+import { Button } from '../../Styles'
+import {
+  Close, ClosetColorSetting, MakeCloset,
+  Palette, ColorSetting, Color, ButtonCenterContainer,
+} from '../../Styles/Modal'
 
-const MakeCloset = styled(SelectCloset)`
-width: 30rem;
-height: 25rem;
-opacity: 0;
-z-index: -1;
-`
-const ClosetColorSetting = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-height: 42%;
-width: 100%;
-`
-
-// 추후 통일
-const Color = styled.div`
-    display:inline-block;
-    width:2rem;
-    height:2rem;
-    margin: 0.5rem;
-    border: 1px solid ${(props:ColorPoropsType) => (props.color === '#ffffff' ? '#e8ebed' : props.color)};
-    border-radius:50%;
-    background-color: ${(props:ColorPoropsType) => (props.color || 'white')};
-    &:hover {
-        cursor: pointer;
-    }
-  `
-const Palette = styled.div`
-    display:flex;
-    flex-direction: column;
-  `
-
-const ColorSetting = styled.div`
-    display: flex;
-  `
-
-const ButtonCenterContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `
-
-export const MakeClosetContent = () => {
+export const MakeClosetContent:FC<ColorSetPropsType> = props => {
   const { closeMakeModal, makeContentRef } = useContext(DataContext) as DataContextValues
   const [topFillColor, setTopFillColor] = useState<string>('#000000')
   const [bottomFillColor, setBottomFillColor] = useState<string>('#000000')
+  const COLORS1 = COLORS.slice(0, COLORS.length / 2)
+  const COLORS2 = COLORS.slice(COLORS.length / 2, COLORS.length)
+  const { colorSet } = props
 
   const onChangeTopClothColor = (color:string) => {
     setTopFillColor(color)
@@ -63,14 +27,13 @@ export const MakeClosetContent = () => {
   }
 
   const onSubmitCloset = () => {
-    CLOTHCOLORSET.push([topFillColor, bottomFillColor])
+    // colorSet.push([topFillColor, bottomFillColor])
     closeMakeModal()
   }
 
   return (
     <MakeCloset
       ref={makeContentRef}
-      name='make'
     >
       <Close onClick={closeMakeModal}>x</Close>
       <ClosetColorSetting>

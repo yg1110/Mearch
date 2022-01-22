@@ -1,45 +1,32 @@
-import React, { FC, useEffect, useRef } from 'react'
-import styled from 'styled-components'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { SelectClosetContent } from '../present/SelectClosetContent'
 import { MakeClosetContent } from '../present/MakeClosetContent'
+import { ColorSetType, DataContextValues, ModalPropsType } from '../../Types'
+import { Overlay, Window } from '../../Styles/Modal'
+import RestService from '../../Api/http-common'
 
-interface ModalPropsType {
-  isOpen: boolean,
-  closeModal: () => void
-}
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: -1;
-  opacity: 0;
-  transition: all 0.5s;
-`
-
-const Window = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`
-
-export type DataContextValues = {
-  makeContentRef: React.MutableRefObject<HTMLDivElement>
-  selectContentRef: React.MutableRefObject<HTMLDivElement>
-  closeModal: () => void
-  closeMakeModal : () => void
-};
-export const DataContext = React.createContext<DataContextValues>(null!)
-
+export const DataContext = React.createContext<DataContextValues | null>(null)
 const Modal:FC<ModalPropsType> = props => {
   const modalRef = useRef() as React.MutableRefObject<HTMLDivElement>
   const makeContentRef = useRef() as React.MutableRefObject<HTMLDivElement>
   const selectContentRef = useRef() as React.MutableRefObject<HTMLDivElement>
   const { isOpen, closeModal } = props
+  const [colorSet, setClorSet] = useState<ColorSetType>([])
 
-  useEffect(() => {
+  const closeMakeModal = () => {
+    makeContentRef.current.style.zIndex = '-1'
+    makeContentRef.current.style.opacity = '0'
+    makeContentRef.current.style.transform = 'translate(-50%, -40%)'
+  }
+
+  const onWindowClick = (e:React.MouseEvent<HTMLDivElement>) => {
+    // 이벤트 버블링 방지
+    if (e.target !== e.currentTarget) return
+    closeMakeModal()
+    closeModal()
+  }
+
+  const setModalvisibility = () => {
     if (isOpen) {
       modalRef.current.style.zIndex = '1'
       modalRef.current.style.opacity = '1'
@@ -49,19 +36,26 @@ const Modal:FC<ModalPropsType> = props => {
       modalRef.current.style.opacity = '0'
       selectContentRef.current.style.transform = 'translate(-50%, -40%)'
     }
+  }
+
+  const getColorset = async () => {
+    const { data, message } = await RestService.getColorset()
+
+    if (message === 'success') {
+      setClorSet(data)
+    } else {
+      // error
+      console.log(message)
+    }
+  }
+
+  useEffect(() => {
+    setModalvisibility()
   }, [isOpen])
 
-  const closeMakeModal = () => {
-    makeContentRef.current.style.zIndex = '-1'
-    makeContentRef.current.style.opacity = '0'
-    makeContentRef.current.style.transform = 'translate(-50%, -40%)'
-  }
-
-  const onWindowClick = (e:React.MouseEvent<HTMLDivElement>) => {
-    if (e.target !== e.currentTarget) return
-    closeMakeModal()
-    closeModal()
-  }
+  useEffect(() => {
+    getColorset()
+  }, [])
 
   const dataContextValues = {
     makeContentRef,
@@ -76,8 +70,8 @@ const Modal:FC<ModalPropsType> = props => {
         ref={modalRef}
       >
         <Window onClick={onWindowClick}>
-          <SelectClosetContent />
-          <MakeClosetContent />
+          <SelectClosetContent colorSet={colorSet} />
+          <MakeClosetContent colorSet={colorSet} />
         </Window>
       </Overlay>
     </DataContext.Provider>

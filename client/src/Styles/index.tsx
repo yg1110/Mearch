@@ -26,3 +26,10 @@ export const Button = styled.div<ButtonType>`
         cursor: pointer;
     `}
 `
+
+export const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+`

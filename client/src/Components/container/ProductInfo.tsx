@@ -1,27 +1,28 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { AxiosResponse } from 'axios'
-import http from '../../Api/http-common'
 import ProductInfoList from '../present/ProductInfoList'
 import { StateType } from '../../Types/index'
+import RestService from '../../Api/http-common'
 import { setProductInfotList } from '../../Middleware/Actions'
 
 function ProductInfo() {
   const dispatch = useDispatch()
   const product = useSelector((state:StateType) => state.product)
-  useEffect(() => {
-    if (product.length === 0) {
-      http
-        .get('/')
-        .then((res: AxiosResponse) => {
-          const { data } = res
-          dispatch(setProductInfotList(data))
-        })
-        .catch(e => {
-          console.log(e)
-        })
+
+  const getProductInfoList = async () => {
+    const { data, message } = await RestService.getProductInfoList()
+
+    if (message === 'success') {
+      dispatch(setProductInfotList(data))
+    } else {
+      // error
+      console.log(message)
     }
-  }, [product])
+  }
+
+  useEffect(() => {
+    getProductInfoList()
+  }, [])
 
   return (
     <React.Fragment>
