@@ -63,4 +63,7 @@ module.exports = {
     getClothColorSet: function() {
         return CLOTHCOLORSET
     },
+    setClothColorSet: function(top, bottom) {
+        return CLOTHCOLORSET.push([top, bottom])
+    },
 }

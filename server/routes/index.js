@@ -156,6 +156,15 @@ router.post('/clothset', (req, res) => {
   )
 })
 
+
+router.post('/setClothset', (req, res) => {
+  let top = req.body.top
+  let bottom = req.body.bottom
+  colorConverter.setClothColorSet(top, bottom)
+  const colorSet = colorConverter.getClothColorSet();
+  res.send(colorSet)
+})
+
 router.post('/search', (req, res) => {
   const color = req.body.color
   const type = req.body.type
