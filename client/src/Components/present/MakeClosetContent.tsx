@@ -1,5 +1,5 @@
 import React, { useContext, useState, FC } from 'react'
-import { ColorSetPropsType, DataContextValues } from '../../Types'
+import { CloSetPropsType, DataContextValues } from '../../Types'
 import { DataContext } from '../container/Modal'
 import { COLORS } from '../../Constants/Color'
 import { ReactComponent as Top } from '../../Assets/top.svg'
@@ -10,13 +10,13 @@ import {
   Palette, ColorSetting, Color, ButtonCenterContainer,
 } from '../../Styles/Modal'
 
-export const MakeClosetContent:FC<ColorSetPropsType> = props => {
+export const MakeClosetContent:FC<CloSetPropsType> = props => {
   const { closeMakeModal, makeContentRef } = useContext(DataContext) as DataContextValues
   const [topFillColor, setTopFillColor] = useState<string>('#000000')
   const [bottomFillColor, setBottomFillColor] = useState<string>('#000000')
   const COLORS1 = COLORS.slice(0, COLORS.length / 2)
   const COLORS2 = COLORS.slice(COLORS.length / 2, COLORS.length)
-  const { colorSet } = props
+  const { setClothset } = props
 
   const onChangeTopClothColor = (color:string) => {
     setTopFillColor(color)
@@ -27,8 +27,8 @@ export const MakeClosetContent:FC<ColorSetPropsType> = props => {
   }
 
   const onSubmitCloset = () => {
-    // colorSet.push([topFillColor, bottomFillColor])
     closeMakeModal()
+    setClothset(topFillColor, bottomFillColor)
   }
 
   return (

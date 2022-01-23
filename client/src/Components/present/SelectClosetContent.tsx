@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, FC } from 'react'
+import React, { useContext, useState, FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { DataContext } from '../container/Modal'
 import { ReactComponent as Top } from '../../Assets/top.svg'

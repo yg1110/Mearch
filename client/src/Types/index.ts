@@ -66,3 +66,15 @@ export type ColorSetType = ColorSet[]
 export type ColorSetPropsType = {
     colorSet:ColorSetType
 }
+
+export type CloSetPropsType = {
+    setClothset: (top:string, bottom:string) => void
+}
+
+export interface ProductInfoListProps {
+    infoList: ProductInfoListType
+}
+
+export interface ProductInfoPropsType {
+  items: ProductInfoListType
+}

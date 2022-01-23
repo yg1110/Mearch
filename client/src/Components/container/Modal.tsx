@@ -49,6 +49,11 @@ const Modal:FC<ModalPropsType> = props => {
     }
   }
 
+  const setClothset = async (topFillColor:string, bottomFillColor:string) => {
+    const clothset = await RestService.setClothset(topFillColor, bottomFillColor)
+    setClorSet(clothset)
+  }
+
   useEffect(() => {
     setModalvisibility()
   }, [isOpen])
@@ -66,12 +71,10 @@ const Modal:FC<ModalPropsType> = props => {
 
   return (
     <DataContext.Provider value={dataContextValues}>
-      <Overlay
-        ref={modalRef}
-      >
+      <Overlay ref={modalRef}>
         <Window onClick={onWindowClick}>
           <SelectClosetContent colorSet={colorSet} />
-          <MakeClosetContent colorSet={colorSet} />
+          <MakeClosetContent setClothset={setClothset} />
         </Window>
       </Overlay>
     </DataContext.Provider>

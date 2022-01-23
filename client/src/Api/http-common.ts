@@ -35,6 +35,11 @@ class RestService {
     const { data } = await this.api.get('/colorset')
     return data
   }
+
+  setClothset = async (top:string, bottom:string) => {
+    const { data } = await this.api.post('/setClothset', { top, bottom })
+    return data
+  }
 }
 
 export default new RestService()
