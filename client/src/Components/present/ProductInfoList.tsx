@@ -1,9 +1,7 @@
 import React, { FC } from 'react'
-import { Container } from '../../Styles'
-import { Items } from '../../Styles/Menu'
 import {
-  Card, ImageContainer, Info,
-  TitleContainer, SalePriceContainer,
+  Card, ImageContainer, Info, Container,
+  Items, TitleContainer, SalePriceContainer,
   PriceContainer, SaleContainer, Paint, Palette,
 } from '../../Styles/ProductInfo'
 import { ProductInfoPropsType } from '../../Types'

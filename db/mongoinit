@@ -1,0 +1,13 @@
+use Mearch
+
+db.createUser({
+  user: 'root',
+  pwd: 'root00',
+  roles: [
+    {role: 'readWrite', db: 'Mearch'},
+    {role: 'userAdmin', db: 'Mearch'},
+  ],
+})
+
+
+db.Products.createIndex({Key: 1}, {unique: true})

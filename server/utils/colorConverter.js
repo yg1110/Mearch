@@ -58,7 +58,7 @@ const CLOTHCOLORSET = [
 
 module.exports = {
     getColor: function(index) {
-        return colors[index]
+        return COLORS[index]
     },
     getClothColorSet: function() {
         return CLOTHCOLORSET

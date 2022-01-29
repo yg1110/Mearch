@@ -1,14 +1,23 @@
 version: '3'
 
 services:
-  mongo:
-    image: mearch-mongo:1.0.0
-    build:
-      context: .
-      dockerfile: ./dockerfile-mongo
+  db:
+    image: yg1110/mearch-mongo:1.0.0
     ports:
       - "27017:27017"
     volumes:
       - ./mongodb:/data/db
     container_name: mearchDB
+    restart: always
+  client:
+    image: yg1110/mearch-nginx:1.0.0
+    ports:
+      - "58333:80"
+    container_name: mearchClient
+    restart: always
+  server:
+    image: yg1110/mearch-node:1.0.0
+    ports:
+      - "58332:58332"
+    container_name: mearchServer
     restart: always

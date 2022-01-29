@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { ProductInfoListType, ColorPoropsType } from '../Types'
+import { ColorPoropsType } from '../Types'
 
 export const Container = styled.ul`
 list-style:none;

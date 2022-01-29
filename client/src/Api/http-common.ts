@@ -18,26 +18,31 @@ class RestService {
 
   getProductInfoList = async () => {
     const { data } = await this.api.get('/')
+    console.log(data)
     return data
   }
 
   getSearchProductInfoList = async (color:string[], type:string[]) => {
     const { data } = await this.api.post('/search', { color, type })
+    console.log(data)
     return data
   }
 
   getClothset = async (top:string, bottom:string) => {
     const { data } = await this.api.post('/clothset', { top, bottom })
+    console.log(data)
     return data
   }
 
   getColorset = async () => {
     const { data } = await this.api.get('/colorset')
+    console.log(data)
     return data
   }
 
   setClothset = async (top:string, bottom:string) => {
     const { data } = await this.api.post('/setClothset', { top, bottom })
+    console.log(data)
     return data
   }
 }
