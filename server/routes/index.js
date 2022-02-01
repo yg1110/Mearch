@@ -112,6 +112,43 @@ router.get('/crawling', (req, res) => {
   res.send("crawling 중")
 })
 
+router.post('/tagSearch', (req, res) => {
+  let tag = req.body.tag
+  let value = req.body.value
+  if(tag === "name") {
+    const query = new RegExp(value);
+    ProductList.find({"Title" : query})
+    .then(productList => {
+      res.send({
+        data: productList,
+        message: 'success'
+      })
+    })
+    .catch(e =>
+      res.send({
+        data: null,
+        message: `fail ${e}`
+      })
+    )
+  }
+  else if(tag === "price"){
+    ProductList.find({"Price" : {$lte:value}})
+    .then(productList => 
+      res.send({
+        data: productList,
+        message: 'success'
+      })
+    )
+    .catch(e =>
+      res.send({
+        data: null,
+        message: `fail ${e}`
+      })
+    )
+  }
+})
+
+
 router.get('/colorset', (req, res) => {
   const colorSet = colorConverter.getClothColorSet();
 
@@ -128,6 +165,10 @@ router.post('/clothset', (req, res) => {
   let bottom = req.body.bottom
   top = top === "#eee6c4" ? "#ffffff" : top
   bottom = bottom === "#eee6c4" ? "#ffffff" : bottom
+  top = top === "#0D0D0E" ? "#000000" : top
+  bottom = bottom === "#0D0D0E" ? "#000000" : bottom
+  
+  
   ProductList.find().or([
     {
         $and:[
@@ -156,8 +197,8 @@ router.post('/clothset', (req, res) => {
   )
 })
 
-
 router.post('/setClothset', (req, res) => {
+  //TODO 같은색상이 있을경우 예외처리
   let top = req.body.top
   let bottom = req.body.bottom
   colorConverter.setClothColorSet(top, bottom)
