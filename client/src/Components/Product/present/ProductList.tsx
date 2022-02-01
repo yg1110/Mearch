@@ -1,19 +1,19 @@
 import React, { FC } from 'react'
 import {
-  Card, ImageContainer, Info, Container,
+  Card, ImageContainer, Info,
   Items, TitleContainer, SalePriceContainer,
   PriceContainer, SaleContainer, Paint, Palette,
-} from '../../Styles/ProductInfo'
-import { ProductInfoPropsType } from '../../Types'
+} from '../../../Styles/Product'
+import { ProductPropsType } from '../../../Types'
 
-const ProductInfoList:FC<ProductInfoPropsType> = props => {
+const ProductList:FC<ProductPropsType> = props => {
+  const product = props.items
   const open = (link:string) => {
     window.open(link, '_blank')
   }
 
-  const product = props.items
   return (
-    <Container>
+    <React.Fragment>
       {product.map(({ Image, Price, Sale, SalePrice, Title, Colors, Type, Link, _id }) => (
         <Items key={_id}>
           <Card>
@@ -42,8 +42,8 @@ const ProductInfoList:FC<ProductInfoPropsType> = props => {
           </Card>
         </Items>
       ))}
-    </Container>
+    </React.Fragment>
   )
 }
 
-export default React.memo(ProductInfoList)
+export default React.memo(ProductList)

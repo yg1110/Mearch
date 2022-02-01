@@ -2,25 +2,33 @@ import styled, { css } from 'styled-components'
 import { ColorPoropsType, ItmePropsType } from '../Types'
 
 export const MenuContents = styled.div`
+${({ theme }) => css`
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
+    justify-content: center;
+    margin: 0 3rem;
+    height: 15%;
+  ${theme.device.tablet} {
+    display: none;
+  }
+`}
 `
+
 export const Category = styled.div`
 ${({ theme }) => css`
     display: flex;
     align-items: center;
     color: ${theme.colors.royalblue};
     font-size: 1.5rem;
-    width: 7rem;
-    justify-content: center;
+    width: 100px;
     font-weight: bold;
 `}
 `
 
 export const Items = styled.div`
     display: flex;
+    flex-wrap: wrap;
+    height: 100%;
 `
 
 export const Item = styled.span<ItmePropsType>`
@@ -30,7 +38,6 @@ ${({ theme }) => css`
     font-weight: bold;
     color: ${(props:ItmePropsType) => {
     if (props.filterCategorys.length === 0) { return props.children === '전체' ? '#3d6eda' : 'rgb(183, 193, 204)' }
-
     return props.filterCategorys.includes(props.children) ? '#3d6eda' : 'rgb(183, 193, 204)'
   }};
 
@@ -50,19 +57,6 @@ ${({ theme }) => css`
 `}
 `
 
-export const Color = styled.div`
-    display:inline-block;
-    width:2rem;
-    height:2rem;
-    margin: 0.5rem;
-    border: 1px solid ${(props:ColorPoropsType) => (props.color === '#ffffff' ? '#e8ebed' : props.color)};
-    border-radius:50%;
-    background-color: ${(props:ColorPoropsType) => (props.color || 'white')};
-    &:hover {
-        cursor: pointer;
-    }
-`
-
 export const Palette = styled.div`
     position: relative;
     width: 3rem;
@@ -78,10 +72,17 @@ export const CheckIcon = styled.div`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    margin: 0.5rem;
     color: ${((props:ColorPoropsType) => {
     const condition1 = props.color === '#ffffff'
     const condition2 = props.color === '#ffea00'
     const condition3 = props.color === '#ceef00'
     return (condition1 || condition2 || condition3) ? 'black' : 'white'
   })};
+`
+
+export const MenuItemContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% - 100px);
 `

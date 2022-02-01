@@ -40,35 +40,37 @@ const colors = {
 }
 
 const size = {
-  mobile: '425px',
+  small: '415px',
+  mobile: '480px',
   tablet: '768px',
-  desktop: '1440px',
+  desktop: '1280px',
 }
 
 // 미디어 쿼리의 중복 코드를 줄이기위해 정의된 변수입니다
 const device = {
+  small: `@media only screen and (max-width: ${size.small})`,
   mobile: `@media only screen and (max-width: ${size.mobile})`,
   tablet: `@media only screen and (max-width: ${size.tablet})`,
-  desktopL: `@media only screen and (max-width: ${size.desktop})`,
+  desktop: `@media only screen and (max-width: ${size.desktop})`,
 }
 
 const lightThemeColors = {
   ...colors,
-  primary: 'rgba(246, 246, 246, 0.5)',
-  secondary: 'rgb(70, 77, 82)',
-  tertiary: '#d4d0c4',
-  forth: 'rgba(70, 77, 82, 0.082)',
-  fifth: '#f9fafc',
+  primary: '#fff',
+  secondary: '#333',
+  tertiary: '#eee',
+  forth: '#eee',
+  fifth: '#fff',
   sixth: '#dfe0e5',
 }
 
 const darkThemeColors = {
   ...colors,
-  primary: 'rgb(16, 20, 33)',
-  secondary: 'rgb(183, 193, 204)',
-  tertiary: '#fff',
-  forth: 'rgba(207, 207, 207, 0.25)',
-  fifth: '#242f41',
+  primary: '#000',
+  secondary: '#fff',
+  tertiary: '#222224',
+  forth: '#333',
+  fifth: '#222224',
   sixth: '#161e2e',
 }
 

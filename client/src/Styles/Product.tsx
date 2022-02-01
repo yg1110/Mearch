@@ -1,20 +1,20 @@
 import styled, { css } from 'styled-components'
 import { ColorPoropsType } from '../Types'
 
-export const Container = styled.ul`
-list-style:none;
-text-align: center;
-width: 100%;
-height: 100%;
+export const ProductContainer = styled.div`
+  width: 100%;
+  height: 85%;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem 0 3rem 0;
 `
 
-export const Items = styled.li`
+export const Items = styled.div`
 ${({ theme }) => css`
-  position: relative;
   background-color: ${theme.colors.primary};
   color:${theme.colors.secondary};
-  float: left;
-  width: 16.666%;
   height: 23rem;
   padding: 1rem;
   transition: 0.2s ease-in-out;
@@ -27,11 +27,10 @@ ${({ theme }) => css`
   position: relative;
   flex-direction: column;
   width: 15rem;
-  padding: 0;
   color:${theme.colors.secondary};
-  border-radius: 0.3rem;
-  background-color: ${theme.colors.primary};
-  box-shadow: 0 1px 3px 0 ${theme.colors.forth}, 0 0 0 1px ${theme.colors.forth};
+  border-radius: 14px;
+  background-color: ${theme.colors.fifth};
+  box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
   transition: box-shadow .1s ease,transform .1s ease,-webkit-box-shadow .1s ease,-webkit-transform .1s ease;
 
   &: hover {

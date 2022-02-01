@@ -10,15 +10,14 @@ import { LIGHT } from './Constants/Color'
 import { store } from './Middleware/Store'
 import { StateType } from './Types'
 import Routes from './Router'
+import Header from './Components/Header'
 
 const ThemeMode = styled.div`
   ${({ theme }) => css`
     background-color: ${theme.colors.primary};
     color: ${theme.colors.secondary};
-    width: 100%;
-    height: 100%;
-    min-width: 100vw;
-    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
   `}
 `
 
@@ -41,6 +40,7 @@ const Providers: FC = ({ children }) => {
 const App: FC = () => (
   <Provider store={store}>
     <Providers>
+      <Header />
       <Routes />
     </Providers>
   </Provider>

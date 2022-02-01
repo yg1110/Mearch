@@ -16,7 +16,7 @@ export interface ThemeType {
     Theme:string
 }
 
-export type ProductInfoListType = ProductInfo[]
+export type ProductListType = ProductInfo[]
 
 export interface ColorPoropsType {
     color : string
@@ -29,7 +29,7 @@ export interface filterTagType {
 }
 
 export type StateType = {
-    product: ProductInfoListType,
+    product: ProductListType,
     theme: string
 };
 
@@ -65,16 +65,28 @@ export type ColorSetType = ColorSet[]
 
 export type ColorSetPropsType = {
     colorSet:ColorSetType
+    onCheckedCloth: (index:number) => void
 }
 
 export type CloSetPropsType = {
     setClothset: (top:string, bottom:string) => void
 }
 
-export interface ProductInfoListProps {
-    infoList: ProductInfoListType
+export interface ProductListProps {
+    infoList: ProductListType
 }
 
-export interface ProductInfoPropsType {
-  items: ProductInfoListType
+export interface ProductPropsType {
+  items: ProductListType
+}
+
+export type MakeClothType = {
+    topFillColor: string,
+    bottomFillColor: string,
+    onChangeTopClothColor: (color:string) => void,
+    onChangeBottomClothColor: (color:string) => void
+}
+
+export type MakeClothPropsType = {
+    items: MakeClothType
 }

@@ -1,13 +1,13 @@
 import React from 'react'
-import ProductInfo from '../Components/container/ProductInfo'
-import Header from '../Components/container/Header'
+import ProductList from '../Components/Product'
+import { Container, PageTitle } from '../Styles'
 
 function Product() {
   return (
-    <React.Fragment>
-      <Header />
-      <ProductInfo />
-    </React.Fragment>
+    <Container>
+      <PageTitle>목록보기</PageTitle>
+      <ProductList />
+    </Container>
   )
 }
 

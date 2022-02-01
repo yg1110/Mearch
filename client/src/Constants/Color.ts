@@ -1,5 +1,5 @@
-export const ACTIVE_COLOR = '#ffa800'
-export const NON_ACTIVE_COLOR = '#d5d5d5'
+export const LIGHT_COLOR = '#fff'
+export const DARK_COLOR = '#000'
 export const THEME = 'Theme'
 export const LIGHT = 'light'
 export const DARK = 'dark'
