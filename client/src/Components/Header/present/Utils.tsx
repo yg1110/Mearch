@@ -20,11 +20,11 @@ type ItemType = {
     changeTheme: () => void,
     isLight: boolean
 }
-interface ThemePropsType {
+interface UtilsPropsType {
     items: ItemType
 }
 
-const Utils:FC<ThemePropsType> = (props:ThemePropsType) => {
+const Utils:FC<UtilsPropsType> = (props:UtilsPropsType) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -64,6 +64,7 @@ const Utils:FC<ThemePropsType> = (props:ThemePropsType) => {
 
     if (message === 'success') {
       dispatch(setProductInfotList(data))
+      navigate('/', { state: 'search' })
       closeSearch()
     } else {
       console.log(message)
@@ -95,7 +96,7 @@ const Utils:FC<ThemePropsType> = (props:ThemePropsType) => {
 
     switch (h1.innerText) {
       case '목록보기': {
-        navigate('/')
+        navigate('/', { state: 'root' })
         break
       }
       case '목록 업데이트': {
@@ -166,7 +167,7 @@ const Utils:FC<ThemePropsType> = (props:ThemePropsType) => {
       </MobileButton>
       <SildeMenuContent ref={sildeRef}>
         <SildeHeader>
-          <Logo />
+          <Logo closeContent={closeSilde} />
           <SildeCloseButton onClick={closeSilde}>x</SildeCloseButton>
         </SildeHeader>
         <SildeContent>
@@ -182,7 +183,7 @@ const Utils:FC<ThemePropsType> = (props:ThemePropsType) => {
       </SildeMenuContent>
       <SearchMenuContent ref={searchRef}>
         <SildeHeader>
-          <Logo />
+          <Logo closeContent={closeSearch} />
           <SildeCloseButton onClick={closeSearch}>x</SildeCloseButton>
         </SildeHeader>
         <SearchContent>

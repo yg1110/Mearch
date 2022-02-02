@@ -8,17 +8,15 @@ const Nav:FC = () => {
   const onChangePage = (e:React.MouseEvent<HTMLLIElement>) => {
     const li = e.target as HTMLLIElement
 
-    console.log(li.innerText)
-
     switch (li.innerText) {
       case '목록보기': {
-        navigate('/')
+        navigate('/', { state: 'root' })
         break
       }
-      case '목록 업데이트': {
-        navigate('/updateproduct')
-        break
-      }
+      // case '목록 업데이트': {
+      //   navigate('/updateproduct')
+      //   break
+      // }
       case '조합 선택하기': {
         navigate('/selectcloset')
         break

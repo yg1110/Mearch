@@ -16,7 +16,10 @@ const MakeCloth:FC<MakeClothPropsType> = props => {
     <Container>
       <ClosetColorSetting>
         <SvgContent>
-          <TopSVG fill={topFillColor} />
+          <TopSVG
+            height='10rem'
+            fill={topFillColor}
+          />
         </SvgContent>
         <Palette>
           {COLORS.map((color:string) => (
@@ -30,7 +33,10 @@ const MakeCloth:FC<MakeClothPropsType> = props => {
       </ClosetColorSetting>
       <ClosetColorSetting>
         <SvgContent>
-          <BottomSVG fill={bottomFillColor} />
+          <BottomSVG
+            height='10rem'
+            fill={bottomFillColor}
+          />
         </SvgContent>
         <Palette>
           {COLORS.map((color:string) => (

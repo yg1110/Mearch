@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import { FILTER_COLOR, FITLER_CATEGORYS } from '../../Constants/Color'
 import { setProductInfotList } from '../../Middleware/Actions'
 import { ProductContainer } from '../../Styles/Product'
@@ -10,6 +11,7 @@ import ProductList from './present/ProductList'
 import RestService from '../../Api/http-common'
 
 const Product = () => {
+  const { state } = useLocation()
   const dispatch = useDispatch()
   const product = useSelector((state:StateType) => state.product)
   const [filterTags, setFilterTags] = useState<filterTagType>({ color: [], category: [] })
@@ -125,8 +127,10 @@ const Product = () => {
   }, [])
 
   useEffect(() => {
-    initFilterStorage()
-    getSearchProductInfoList()
+    if (state === null || state === 'root') {
+      initFilterStorage()
+      getSearchProductInfoList()
+    }
   }, [filterTags])
 
   const menuItems = {

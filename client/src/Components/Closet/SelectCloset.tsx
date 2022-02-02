@@ -35,7 +35,7 @@ function SelectCloset() {
 
     if (message === 'success') {
       dispatch(setProductInfotList(data))
-      navigate('/')
+      navigate('/', { state: 'select' })
     } else {
       console.log(message)
     }

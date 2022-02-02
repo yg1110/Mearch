@@ -20,7 +20,8 @@ type ButtonType = {
 }
 
 type SVGType = {
-    fill: string
+    fill: string,
+    height: string
 }
 export const Button = styled.div<ButtonType>`
     ${({ theme }) => css`
@@ -54,6 +55,7 @@ export const Container = styled.div`
 
 export const TopSVG = styled(Top)`
   ${({ theme }) => css`
+    height: ${(props:SVGType) => props.height};
     fill:${(props:SVGType) => {
     if (props.fill === theme.colors.primary || props.fill === '') {
       return theme.colors.secondary
@@ -65,6 +67,7 @@ export const TopSVG = styled(Top)`
 
 export const BottomSVG = styled(Bottom)<SVGType>`
   ${({ theme }) => css`
+    height: ${(props:SVGType) => props.height};
     fill:${(props:SVGType) => {
     if (props.fill === theme.colors.primary || props.fill === '') {
       return theme.colors.secondary

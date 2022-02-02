@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import Logo from './present/Logo'
 import Nav from './present/Nav'
 import Utils from './present/Utils'
@@ -11,7 +12,7 @@ import { Container } from '../../Styles/Header'
 
 const Header = () => {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const [isLight, setIsLight] = useState<boolean>(getStorage(THEME) === LIGHT)
 
   const changeTheme = () => {
@@ -30,9 +31,14 @@ const Header = () => {
     changeTheme,
     isLight,
   }
+
+  const closeContent = () => {
+    navigate('/', { state: 'root' })
+  }
+
   return (
     <Container>
-      <Logo />
+      <Logo closeContent={closeContent} />
       <Nav />
       <Utils items={themeItems} />
     </Container>

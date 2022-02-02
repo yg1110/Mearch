@@ -97,6 +97,7 @@ export const SvgContent = styled.div`
   ${({ theme }) => css`
     display: flex;
     justify-content: center;
+    align-items: center;
     height: 100%;
     ${theme.device.pc} {
       width: 10%;

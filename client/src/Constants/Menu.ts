@@ -6,4 +6,4 @@ export const DARK = 'dark' as const
 export const MENUS = ['전체', '상의', '바지', '아우터', '신발', '가방', '모자'] as const
 export const TITLE = 'Mearch' as const
 
-export const NAVIGATIONLIST = ['목록보기', '목록 업데이트', '조합 선택하기', '조합 추가하기']
+export const NAVIGATIONLIST = ['목록보기', '조합 선택하기', '조합 추가하기']
