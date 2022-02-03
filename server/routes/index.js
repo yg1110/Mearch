@@ -80,7 +80,7 @@ const parsing = (document, type, color) => {
 
 const crawling = () => {
   const type = ["상의", "바지", "아우터", "신발", "가방", "모자"]
-  for(let i=0; i<=11; i++){
+  for(let i=0; i<=15; i++){
     for(let j=0; j<=5; j++){
       getDocument(j, i).then(document => {
         parsing(document, type[j], i)
