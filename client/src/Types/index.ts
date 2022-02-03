@@ -16,6 +16,19 @@ export interface ThemeType {
     Theme:string
 }
 
+export type ButtonType = {
+    width: string
+}
+
+export interface TitlePoropsType {
+    title? : string
+}
+
+export type SVGType = {
+    fill: string,
+    height: string
+}
+
 export type ProductListType = ProductInfo[]
 
 export interface ColorPoropsType {
@@ -89,4 +102,9 @@ export type MakeClothType = {
 
 export type MakeClothPropsType = {
     items: MakeClothType
+}
+
+export type MultiCheckComboBox = {
+    checked: boolean,
+    name: string,
 }

@@ -9,6 +9,9 @@ import { getStorage, setStorage } from '../../Utils/storage'
 import Menu from './present/Menu'
 import ProductList from './present/ProductList'
 import RestService from '../../Api/http-common'
+import MultiCategoryCombobox from './present/MultiCategoryCombobox'
+import MultiColorCombobox from './present/MultiColorCombobox'
+import { MobileMenuContainer } from '../../Styles/Menu'
 
 const Product = () => {
   const { state } = useLocation()
@@ -142,6 +145,10 @@ const Product = () => {
   return (
     <React.Fragment>
       <Menu items={menuItems} />
+      <MobileMenuContainer>
+        <MultiCategoryCombobox items={menuItems} />
+        <MultiColorCombobox items={menuItems} />
+      </MobileMenuContainer>
       <ProductContainer>
         <ProductList items={product} />
       </ProductContainer>

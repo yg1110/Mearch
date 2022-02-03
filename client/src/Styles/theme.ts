@@ -60,7 +60,7 @@ const lightThemeColors = {
   secondary: '#333',
   tertiary: '#eee',
   forth: '#eee',
-  fifth: '#fff',
+  fifth: '#f9fafc',
   sixth: '#dfe0e5',
 }
 

@@ -20,6 +20,7 @@ export const Title = styled.h1`
     ${({ theme }) => css`
         font-size: 2rem;
         color:${theme.colors.secondary};
+        cursor: pointer;
     `}
 `
 
@@ -199,20 +200,5 @@ export const SearchTag = styled.select`
             font-size: 1em;
             width: auto;
         }
-    `}
-`
-
-export const Button = styled.button`
-    ${({ theme }) => css`
-        display: block;
-        width: 180px;
-        height: 60px;
-        margin: 1rem;
-        border-radius: 60px;
-        font-size: 18px;
-        line-height: 60px;
-        color: ${theme.colors.primary};
-        background-color: ${theme.colors.secondary};
-        text-align: center;
     `}
 `

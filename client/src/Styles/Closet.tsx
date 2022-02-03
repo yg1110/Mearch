@@ -52,21 +52,20 @@ export const ButtonContainer = styled.div`
 
 export const Button = styled.div`
   ${({ theme }) => css`
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 10rem;
-      height: 3rem;
-      padding: 1rem;
-      background: ${theme.colors.fifth};
-      border: 1px solid ${theme.colors.sixth};
-      font-weight: bold;
-      cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 3rem;
+    padding: 1rem;
+    background: ${theme.colors.fifth};
+    border: 1px solid ${theme.colors.sixth};
+    font-weight: bold;
+    cursor: pointer;
   `}
 `
 
 export const ClosetColorSetting = styled.div`
-
   ${({ theme }) => css`
     display: flex;
     align-items: center;
