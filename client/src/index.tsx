@@ -11,6 +11,7 @@ import { store } from './Middleware/Store'
 import { StateType } from './Types'
 import Routes from './Router'
 import Header from './Components/Header'
+import Loader from './Pages/Loader'
 
 const ThemeMode = styled.div`
   ${({ theme }) => css`
@@ -21,17 +22,32 @@ const ThemeMode = styled.div`
   `}
 `
 
+const RootContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+`
+
 const Providers: FC = ({ children }) => {
   const theme = useSelector((state:StateType) => state.theme)
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme === LIGHT ? lightTheme : darkTheme}>
         <GlobalTheme />
-        <React.Suspense fallback={<p>loading...</p>}>
-          <ThemeMode>
-            {children}
-          </ThemeMode>
-        </React.Suspense>
+        <ThemeMode>
+          <React.Suspense fallback={
+            <Loader
+              type='cylon'
+              color={theme === LIGHT ? 'black' : 'white'}
+            />
+          }
+          >
+            <RootContainer>
+              {children}
+            </RootContainer>
+          </React.Suspense>
+        </ThemeMode>
       </ThemeProvider>
     </BrowserRouter>
   )

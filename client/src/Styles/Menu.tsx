@@ -97,6 +97,7 @@ export const MobileMenuContainer = styled.div`
     ${theme.device.mobile} {
       display: flex;
       width: 100%;
+      margin-top: 18px;
     }
   `}
 `

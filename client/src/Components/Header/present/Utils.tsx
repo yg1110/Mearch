@@ -137,13 +137,13 @@ const Utils:FC<UtilsPropsType> = (props:UtilsPropsType) => {
       </SvgButton>
       <SvgButton>
         {isLight
-          ? <Light
+          ? <Dark
               onClick={() => changeTheme()}
               fill={DARK_COLOR}
               width='24px'
               height='24px'
           />
-          : <Dark
+          : <Light
               onClick={() => changeTheme()}
               fill={LIGHT_COLOR}
               width='24px'

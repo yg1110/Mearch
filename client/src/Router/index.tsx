@@ -6,6 +6,7 @@ const Routers: FC = () => {
   const MakeCloset = React.lazy(() => import('../Pages/MakeCloset'))
   const SelectCloset = React.lazy(() => import('../Pages/SelectCloset'))
   const UpdateProduct = React.lazy(() => import('../Pages/UpdateProduct'))
+  const ErrorPage = React.lazy(() => import('../Pages/ErrorPage'))
   return (
     <Routes>
       <Route
@@ -23,6 +24,10 @@ const Routers: FC = () => {
       <Route
         path='/updateproduct'
         element={<UpdateProduct />}
+      />
+      <Route
+        path='*'
+        element={<ErrorPage />}
       />
     </Routes>
 

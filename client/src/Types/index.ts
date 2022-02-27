@@ -108,3 +108,9 @@ export type MultiCheckComboBox = {
     checked: boolean,
     name: string,
 }
+
+type LoadingType = 'blank' | 'balls' | 'bars' | 'bubbles' | 'cubes' | 'cylon' | 'spin' | 'spinningBubbles' | 'spokes';
+export interface LoaderPropsType {
+    type: LoadingType,
+    color: string
+}

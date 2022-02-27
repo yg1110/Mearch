@@ -10,6 +10,10 @@ export const GlobalTheme = createGlobalStyle`
         box-sizing: border-box;
         font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
     }
+    #root{
+      width: 100vw;
+      height: 100vh;
+    }
     ul {
         list-style: none;
     }
@@ -19,7 +23,6 @@ export const Container = styled.div`
   flex-direction: column;
   height: 93%;
   width: 100%;
-  max-width: 1300px;
   margin: auto;
 `
 

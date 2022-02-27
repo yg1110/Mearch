@@ -8,7 +8,7 @@
 - <del>모바일 카테고리 선택 기능 추가(멀티 콤보박스)</del>
 - <del>라벤더 이후 뒷부분 색 크롤링 제대로 되지 않는 문제 해결</del>
 - GraphQL 적용
-- 로딩페이지 추가
+- <del>로딩페이지 추가</del>
 - 에러 alert 페이지 추가
 - 404페이지 추가
 - 소개 페이지 추가
@@ -22,3 +22,29 @@
 - 스크롤바 디자인
 - 로컬스토리지 에러 수정(이미 저장되어있고, 다시 리로딩할때 남아있음)
 - 목록 페이지 api호출로직 수정하기
+- timeout 5초 사용
+- API 요청전 / 요청중 / 요청후 / 실패에 대한 UI 처리
+
+### client
+- React
+- TypeScript
+- GraphQL
+- Apollo
+- Next.js
+- Lerna
+- styled-components
+- Storybook
+### server
+- Express
+- TypeScript
+- GraphQL
+- Apollo
+- TypeGraphQL
+- Typegoose
+- redis
+
+## CI / CD
+- aws
+- docker
+- jenkins
+- githubAction
