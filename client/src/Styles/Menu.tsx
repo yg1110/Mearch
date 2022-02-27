@@ -5,8 +5,7 @@ export const MenuContents = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin: 0 3rem;
+    margin: auto;
     height: 15%;
     ${theme.device.tablet} {
       display: none;

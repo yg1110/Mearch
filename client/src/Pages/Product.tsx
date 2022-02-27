@@ -1,11 +1,10 @@
 import React from 'react'
 import ProductList from '../Components/Product'
-import { Container, PageTitle } from '../Styles'
+import { Container } from '../Styles'
 
 function Product() {
   return (
     <Container>
-      <PageTitle>목록보기</PageTitle>
       <ProductList />
     </Container>
   )

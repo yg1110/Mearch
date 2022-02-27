@@ -14,20 +14,13 @@ export const GlobalTheme = createGlobalStyle`
         list-style: none;
     }
 `
-
-export const PageTitle = styled.h2`
-    ${({ theme }) => css`
-        margin: 2rem 0 0 2rem;
-        font-size: 2rem;
-        color:${theme.colors.secondary};
-    `}
-`
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 93%;
   width: 100%;
+  max-width: 1300px;
+  margin: auto;
 `
 
 export const TopSVG = styled(Top)`

@@ -36,8 +36,8 @@ const MultiColorCombobox:FC<MenuPropsType> = props => {
       </SelectBox>
       <Checkboxes ref={comboRef}>
         {COLORS.map((color:string, key:number) => (
-
           <label
+            key={key}
             htmlFor={color}
           >
             <input

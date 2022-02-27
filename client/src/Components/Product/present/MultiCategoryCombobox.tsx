@@ -41,6 +41,7 @@ const MultiCategoryCombobox:FC<MenuPropsType> = props => {
       <Checkboxes ref={comboRef}>
         {MENUS.map((menu:string, index:number) => (
           <label
+            key={index}
             htmlFor={menu}
             onClick={() => categoryClick(index)}
           >
