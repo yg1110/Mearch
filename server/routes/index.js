@@ -163,10 +163,6 @@ router.get('/colorset', (req, res) => {
 router.post('/clothset', (req, res) => {
   let top = req.body.top
   let bottom = req.body.bottom
-  top = top === "#eee6c4" ? "#ffffff" : top
-  bottom = bottom === "#eee6c4" ? "#ffffff" : bottom
-  top = top === "#0D0D0E" ? "#000000" : top
-  bottom = bottom === "#0D0D0E" ? "#000000" : bottom
   
   
   ProductList.find().or([

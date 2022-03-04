@@ -1,7 +1,9 @@
 import React, { FC } from 'react'
 import { ReactComponent as Top } from '../../../Assets/top.svg'
 import { ReactComponent as Bottom } from '../../../Assets/bottom.svg'
-import { Cloth, Container, RadioButton } from '../../../Styles/Closet'
+import {
+  BottomBorder, Cloth, Container, RadioButton, TopBorder,
+} from '../../../Styles/Closet'
 import { ColorSetPropsType } from '../../../Types'
 
 const SelectCloth:FC<ColorSetPropsType> = props => {
@@ -11,14 +13,18 @@ const SelectCloth:FC<ColorSetPropsType> = props => {
     <Container>
       {colorSet.map((set:string[], i:number) => (
         <Cloth key={set[0] + set[1] + i}>
-          <Top
-            fill={set[0]}
-            height='3rem'
-          />
-          <Bottom
-            fill={set[1]}
-            height='4rem'
-          />
+          <TopBorder color={set[0]}>
+            <Top
+              fill={set[0]}
+              height='3rem'
+            />
+          </TopBorder>
+          <BottomBorder color={set[1]}>
+            <Bottom
+              fill={set[1]}
+              height='4rem'
+            />
+          </BottomBorder>
           <RadioButton
             type='radio'
             name='cloth'

@@ -113,3 +113,25 @@ export const SvgContent = styled.div`
     }
   `}
 `
+
+type TopBorderType = {
+  color: string
+}
+
+export const TopBorder = styled.div<TopBorderType>`
+  ${({ theme }) => css`
+  stroke: ${(props:TopBorderType) => {
+    if (theme.colors.primary === '#000' && props.color === '#000000') return 'white'
+    if (theme.colors.primary === '#fff' && props.color === '#ffffff') return 'black'
+    return 'transparent'
+  }};`}
+`
+
+export const BottomBorder = styled.div<TopBorderType>`
+  ${({ theme }) => css`
+    stroke: ${(props:TopBorderType) => {
+    if (theme.colors.primary === '#000' && props.color === '#000000') return 'white'
+    if (theme.colors.primary === '#fff' && props.color === '#ffffff') return 'black'
+    return 'transparent'
+  }};`}
+`
