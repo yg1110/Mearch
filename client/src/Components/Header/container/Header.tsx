@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import Logo from './present/Logo'
-import Nav from './present/Nav'
-import Utils from './present/Utils'
+import Logo from '../present/Logo'
+import Nav from '../present/Nav'
+import Utils from '../present/Utils'
 
-import { getStorage, setStorage } from '../../Utils/storage'
-import { setTheme } from '../../Middleware/Actions'
-import { LIGHT, THEME, DARK } from '../../Constants/Color'
-import { Container } from '../../Styles/Header'
+import { getStorage, setStorage } from '../../../Utils/storage'
+import { setTheme } from '../../../Middleware/Actions'
+import { LIGHT, THEME, DARK } from '../../../Constants/Color'
+import { Container } from '../../../Styles/Header'
 
 const Header = () => {
   const dispatch = useDispatch()

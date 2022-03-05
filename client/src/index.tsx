@@ -10,7 +10,7 @@ import { LIGHT } from './Constants/Color'
 import { store } from './Middleware/Store'
 import { StateType } from './Types'
 import Routes from './Router'
-import Header from './Components/Header'
+import Header from './Components/Header/container/Header'
 import Loader from './Pages/Loader'
 
 const ThemeMode = styled.div`

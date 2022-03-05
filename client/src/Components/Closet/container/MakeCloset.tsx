@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ClosetContent, ButtonContainer, Button } from '../../Styles/Closet'
-import MakeCloth from './present/MakeCloth'
-import RestService from '../../Api/http-common'
+import { ClosetContent, ButtonContainer, Button } from '../../../Styles/Closet'
+import MakeCloth from '../present/MakeCloth'
+import RestService from '../../../Api/http-common'
 
 function MakeCloset() {
   const navigate = useNavigate()

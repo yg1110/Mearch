@@ -1,5 +1,5 @@
 import {
-  PPRODUCT_INFO_ADD, SET_THEME, ActionType, setProductInfotList, setTheme,
+  PPRODUCT_LIST, SET_THEME, ActionType, setProductInfotList, setTheme,
 } from './Actions'
 import { getStorage } from '../Utils/storage'
 import { StateType } from '../Types'
@@ -11,7 +11,7 @@ export const productReducer = (
   action: ActionType,
 ) => {
   switch (action.type) {
-    case PPRODUCT_INFO_ADD: {
+    case PPRODUCT_LIST: {
       const productAction = action as ReturnType<typeof setProductInfotList>
       return { ...state, product: productAction.payload }
     }

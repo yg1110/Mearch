@@ -91,7 +91,10 @@ export const MobileMenuContainer = styled.div`
     }
 
     ${theme.device.tablet} {
-      display: none;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: 18px;
     }
 
     ${theme.device.mobile} {

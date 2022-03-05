@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { ClosetContent, ButtonContainer, Button } from '../../Styles/Closet'
-import RestService from '../../Api/http-common'
-import SelectCloth from './present/SelectCloth'
-import { ColorSetType } from '../../Types'
-import { setProductInfotList } from '../../Middleware/Actions'
+import { ClosetContent, ButtonContainer, Button } from '../../../Styles/Closet'
+import RestService from '../../../Api/http-common'
+import SelectCloth from '../present/SelectCloth'
+import { ColorSetType } from '../../../Types'
+import { setProductInfotList } from '../../../Middleware/Actions'
 
 function SelectCloset() {
   const dispatch = useDispatch()

@@ -1,5 +1,5 @@
 import React from 'react'
-import ClosetContent from '../Components/Closet/SelectCloset'
+import ClosetContent from '../Components/Closet/container/SelectCloset'
 import { Container } from '../Styles'
 
 function SelectCloset() {

@@ -1,10 +1,10 @@
 import { ProductListType } from '../Types'
 
-export const PPRODUCT_INFO_ADD = 'product/ADD'
+export const PPRODUCT_LIST = 'product/LIST'
 export const SET_THEME = 'theme/SET'
 
 export const setProductInfotList = (productInfo: ProductListType) => ({
-  type: PPRODUCT_INFO_ADD,
+  type: PPRODUCT_LIST,
   payload: productInfo,
 })
 
