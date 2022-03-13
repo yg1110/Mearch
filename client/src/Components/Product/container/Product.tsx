@@ -37,13 +37,13 @@ const Product = () => {
   const getSearchProductInfoList = async () => {
     const filterColor = JSON.parse(getStorage(FILTER_COLOR))
     const filteerCategory = JSON.parse(getStorage(FITLER_CATEGORYS))
-    const { data, message } = await RestService.getSearchProductInfoList(filterColor, filteerCategory)
+    const { data, success } = await RestService.getSearchProductInfoList(filterColor, filteerCategory)
 
-    if (message === 'success') {
+    if (success) {
       dispatch(setProductInfotList(data))
     } else {
       // error
-      console.log(message)
+      console.error(data.message)
     }
   }
 
@@ -126,15 +126,10 @@ const Product = () => {
   }
 
   useEffect(() => {
+    initFilterStorage()
     parseFilterStorage()
+    getSearchProductInfoList()
   }, [])
-
-  useEffect(() => {
-    if (state === null || state === 'root') {
-      initFilterStorage()
-      getSearchProductInfoList()
-    }
-  }, [filterTags])
 
   const menuItems = {
     filterTags,

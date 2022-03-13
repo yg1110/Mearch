@@ -8,7 +8,7 @@ class RestService {
   constructor() {
     this.api = axios.create({
       baseURL: URL,
-      timeout: 5000,
+      timeout: 100000,
       headers: {
         'Content-type': 'application/json',
         accept: '*/*',
@@ -18,26 +18,31 @@ class RestService {
 
   getSearchProductInfoList = async (color:string[], type:string[]) => {
     const { data } = await this.api.post('/search', { color, type })
+    console.log(data)
     return data
   }
 
-  getClothset = async (top:string, bottom:string) => {
-    const { data } = await this.api.post('/clothset', { top, bottom })
+  getCategorySearch = async (tag:string, value:string) => {
+    const { data } = await this.api.post('/search/category', { tag, value })
+    console.log(data)
     return data
   }
 
-  getColorset = async () => {
-    const { data } = await this.api.get('/colorset')
+  getClothset = async () => {
+    const { data } = await this.api.get('/clothset')
+    console.log(data)
     return data
   }
 
   setClothset = async (top:string, bottom:string) => {
-    const { data } = await this.api.post('/setClothset', { top, bottom })
+    const { data } = await this.api.post('/clothset', { top, bottom })
+    console.log(data)
     return data
   }
 
-  getTagSearch = async (tag:string, value:string) => {
-    const { data } = await this.api.post('/tagSearch', { tag, value })
+  searchClothset = async (top:string, bottom:string) => {
+    const { data } = await this.api.post('/clothset/search', { top, bottom })
+    console.log(data)
     return data
   }
 }

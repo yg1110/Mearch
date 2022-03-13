@@ -1,6 +1,6 @@
 import React, { FC, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {
   UtilsList, SvgButton, MobileButton, SildeMenuContent, SildeHeader,
   SildeCloseButton, SildeText, SildeContent, SearchMenuContent,
@@ -12,9 +12,9 @@ import { ReactComponent as Dark } from '../../../Assets/dark.svg'
 import { ReactComponent as Light } from '../../../Assets/light.svg'
 import { ReactComponent as Search } from '../../../Assets/search.svg'
 import { ReactComponent as Menu } from '../../../Assets/menu.svg'
-import Logo from './Logo'
 import { NAVIGATIONLIST } from '../../../Constants/Menu'
 import { setProductInfotList } from '../../../Middleware/Actions'
+import Logo from './Logo'
 
 type ItemType = {
     changeTheme: () => void,
@@ -27,6 +27,7 @@ interface UtilsPropsType {
 const Utils:FC<UtilsPropsType> = (props:UtilsPropsType) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { state } = useLocation()
 
   const sildeRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLDivElement>(null)
@@ -59,15 +60,20 @@ const Utils:FC<UtilsPropsType> = (props:UtilsPropsType) => {
     }
   }
 
-  const getTagSearch = async (tag:string, value:string) => {
-    const { data, message } = await RestService.getTagSearch(tag, value)
+  const getCategorySearch = async (tag:string, value:string) => {
+    const { data, success } = await RestService.getCategorySearch(tag, value)
 
-    if (message === 'success') {
+    console.log(data, success)
+
+    if (success) {
       dispatch(setProductInfotList(data))
-      navigate('/', { state: 'search' })
+      console.log(state)
+      if (state !== 'search') {
+        navigate('/', { state: 'search' })
+      }
       closeSearch()
     } else {
-      console.log(message)
+      console.error(data.message)
     }
   }
 
@@ -79,13 +85,13 @@ const Utils:FC<UtilsPropsType> = (props:UtilsPropsType) => {
         const isNumber = /\d/
         if (value === 'price') {
           if (isNumber.test(input.value)) {
-            getTagSearch(value, input.value)
+            getCategorySearch(value, input.value)
           } else {
             alert('숫자만 입력해주세요.')
             input.value = ''
           }
         } else {
-          getTagSearch(value, input.value)
+          getCategorySearch(value, input.value)
         }
       }
     }

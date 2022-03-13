@@ -14,13 +14,13 @@ function SelectCloset() {
   const [chooseCloth, setChooseCloth] = useState<number>(-1)
 
   const getColorset = async () => {
-    const { data, message } = await RestService.getColorset()
+    const { data, success } = await RestService.getClothset()
 
-    if (message === 'success') {
+    if (success) {
       setClorSet(data)
     } else {
       // error
-      console.log(message)
+      console.error(data.message)
     }
   }
 
@@ -31,13 +31,13 @@ function SelectCloset() {
   const onSubmitCloth = async () => {
     if (chooseCloth === -1) return false
     const clothSet = colorSet[chooseCloth]
-    const { data, message } = await RestService.getClothset(clothSet[0], clothSet[1])
+    const { data, success } = await RestService.searchClothset(clothSet[0], clothSet[1])
 
-    if (message === 'success') {
+    if (success) {
       dispatch(setProductInfotList(data))
       navigate('/', { state: 'select' })
     } else {
-      console.log(message)
+      console.error(data.message)
     }
 
     return true
