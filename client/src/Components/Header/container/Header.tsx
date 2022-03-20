@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Logo from '../present/Logo'
 import Nav from '../present/Nav'
 import Utils from '../present/Utils'
@@ -11,6 +11,7 @@ import { LIGHT, THEME, DARK } from '../../../Constants/Color'
 import { Container } from '../../../Styles/Header'
 
 const Header = () => {
+  const { state } = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [isLight, setIsLight] = useState<boolean>(getStorage(THEME) === LIGHT)
@@ -33,6 +34,7 @@ const Header = () => {
   }
 
   const closeContent = () => {
+    console.log(state)
     navigate('/', { state: 'root' })
   }
 

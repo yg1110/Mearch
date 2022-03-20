@@ -1,8 +1,15 @@
 import React, { FC } from 'react'
 import {
-  Card, ImageContainer, Info,
-  Items, TitleContainer, SalePriceContainer,
-  PriceContainer, SaleContainer, Paint, Palette,
+  Card,
+  Info,
+  Paint,
+  Items,
+  Palette,
+  SaleContainer,
+  ImageContainer,
+  TitleContainer,
+  PriceContainer,
+  SalePriceContainer,
 } from '../../../Styles/Product'
 import { ProductPropsType } from '../../../Types'
 

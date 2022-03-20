@@ -3,7 +3,7 @@ const cheerio = require("cheerio");
 const spawn = require("child_process").spawn;
 const { xml } = require("cheerio/lib/static");
 const { filter } = require("domutils");
-const schedule = require("node-schedule");
+// const schedule = require("node-schedule");
 const colors = require("../../utils/colors");
 const parser = require("../../utils/parser");
 const ProductList = require("../../models/product");
@@ -107,8 +107,8 @@ const getCrawling = (req, res) => {
   }
 };
 
-schedule.scheduleJob("0 0 * * * *", () => {
-  crawling();
-});
+// schedule.scheduleJob("0 0 * * * *", () => {
+//   crawling();
+// });
 
 exports.getCrawling = getCrawling;

@@ -44,6 +44,7 @@ export interface filterTagType {
 export type StateType = {
     product: ProductListType,
     theme: string
+    isLoad: boolean
 };
 
 export type DataContextValues = {
